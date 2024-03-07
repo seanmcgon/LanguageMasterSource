@@ -1,0 +1,14 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+
+    "test": "jest --config jest.config.js --detectOpenHandles"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
