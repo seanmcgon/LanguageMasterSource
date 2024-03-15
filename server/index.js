@@ -1,44 +1,48 @@
 //#region Setup, Database Creation, App Creation
-const express = require("express");
+const express = require('express');
+const http = require('http');
+const WebSocket = require('ws');
+
 const app = express();
+const server = http.createServer(app);
+const wss = new WebSocket.Server({ server });
 
 const cors = require('cors');
 app.use(cors());
 
-const PORT = process.env.PORT || 3001;
-// get
-app.get("/api", (req, res) => {
-  res.json({ message: "Node.js server says hi to React Frontend!" });
+wss.on('connection', (ws) => {
+  console.log('Client connected');
+
+  ws.on('message', (message) => {
+    console.log(`Received: ${message}`);
+    // Broadcast the message to all clients
+    wss.clients.forEach((client) => {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
+  });
+
+  ws.on('close', () => {
+    console.log('Client disconnected');
+  });
 });
 
-if (process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
-  })
-};
-
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://LanguageMaster:BabelCS320@languagemastercluster.5xln7py.mongodb.net/?retryWrites=true&w=majority&appName=LanguageMasterCluster";
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
+server.listen(3001, () => {
+  console.log('Server listening on port 3001');
 });
-async function run() {
-  try {
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Node.js backend is connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
-  }
-}
-run().catch(console.dir);
+
+let i = 0;
+setInterval(() => {
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      i = i+1;
+      client.send('Ping from the server ' + i.toString());
+    }
+  });
+}, 300);
+
+
 
 //#endregion
 module.exports = app;
