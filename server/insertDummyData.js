@@ -1,6 +1,5 @@
 const { MongoClient } = require('mongodb');
 const { faker } = require('@faker-js/faker');
-const fs = require('node:fs');
 
 const connectionString = "mongodb+srv://mkandeshwara:0CgF5I8hwXaf88dy@cluster0.tefxjrp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const client = new MongoClient(connectionString);
