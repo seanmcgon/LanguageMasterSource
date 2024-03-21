@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import bannerImg from './TestBannerImage.jpg'
 
 const App = () => {
   // State for storing the received message from the server
@@ -53,8 +54,20 @@ const App = () => {
         onChange={(e) => setInputMessage(e.target.value)}
       />
       <button onClick={sendMessage}>Send Message</button>
+      <p></p>
+      <Banner/>
     </div>
   );
 };
+
+function Banner() {
+  return (
+    <div class="banner">
+      <img src={bannerImg} alt="Example banner image" className='banner-image'/>
+      <div className="banner-gradient-overlay"></div>
+      <button class="btn">Start learning</button>
+    </div>
+  );
+}
 
 export default App;
