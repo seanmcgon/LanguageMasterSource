@@ -60,12 +60,12 @@ const App = () => {
   );
 };
 
-function Banner() {
+function Banner({handleClick}) {
   return (
-    <div class="banner">
+    <div className="banner">
       <img src={bannerImg} alt="Example banner image" className='banner-image'/>
       <div className="banner-gradient-overlay"></div>
-      <button class="btn">Start learning</button>
+      <button className="btn" onClick={handleClick}>Start learning</button>
     </div>
   );
 }
