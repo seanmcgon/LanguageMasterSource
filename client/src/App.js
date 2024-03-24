@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { io } from 'socket.io-client';
+import React, { useState } from 'react';
 import Login from './components/login';
-import { emitStudentInfo } from './components/socket';
-
-
+import './App.css'; // Import the CSS file
 
 const App = () => {
+  // State to manage the visibility of the Login component
+  const [showLogin, setShowLogin] = useState(false);
+
   return (
     <div>
       <h1>Language Master</h1>
-      <Login />
+      <button className="login-button" onClick={() => setShowLogin(true)}>Login Page</button>
+      {showLogin && <Login />}
     </div>
   );
 };
-
 export default App;

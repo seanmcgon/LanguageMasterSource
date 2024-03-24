@@ -12,7 +12,7 @@ export const disconnectSocket = () => {
   socket.disconnect();
 };
 
-export const emitStudentInfo = (studentName, studentPassword, callback) => {
+export const verifyStudent = (studentName, studentPassword, callback) => {
   socket.emit('studentInfo', studentName, studentPassword);
   socket.on("studentVerification", callback);
 };

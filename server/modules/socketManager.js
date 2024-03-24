@@ -13,7 +13,7 @@ function initSocket(server) {
     io.on('connection', socket => {
         console.log("numClients connected", ++numConnected);
         console.log(`Client connected: ${socket.id}`);
-
+      
         verifyStudentData(socket);
 
         socket.on('disconnect', () => {
