@@ -3,6 +3,7 @@ import { verifyStudent } from './socket';
 
 
 const Login = () => {
+  //states to handle the student status
   const [studentVerified, setStudentVerified] = useState('');
   const [studentName, setStudentName] = useState(''); 
   const [studentPassword, setStudentPassword] = useState('');
@@ -16,6 +17,9 @@ const Login = () => {
   };
 
   const handleSubmit = () => {
+    //handleSubmit is called when a student clicks the login button
+    //we call verify student and pass in the student's information to get a response from the backend
+    //verificationStatus is the response from the back-end
     verifyStudent(studentName, studentPassword, (verificationStatus) => {
       console.log(verificationStatus);
       setStudentVerified(verificationStatus);
