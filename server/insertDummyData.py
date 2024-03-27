@@ -1,4 +1,4 @@
-# Maya Kandeshwarath 3/29/2024, Script to insert test data into the database
+# Maya Kandeshwarath 3/29/2024, Script to insert fake data into the database, to be used for mocks and testing
 # originally written earlier in js, but rewritten in python due to data being inserted incorrectly
 
 from pymongo.mongo_client import MongoClient
@@ -27,6 +27,7 @@ def createTeacher():
     first = faker.first_name()
     last = faker.last_name()
     courses = []
+    # TODO: Instead of randomly generated strings, number the classes from zero to however many classes are in the database ie Spanish101_001230
     for i in range(NUMOFCLASSESPERTEACHER):
         courses.append(random.choice(LANGUAGES) + str(random.randrange(100, 900)) + "_" + faker.pystr_format(string_format = "??????", letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"))
     return {"name": first + " " + last, "email": first + "." + last + "@" + faker.free_email_domain(), "password": faker.pystr(min_chars = 8, max_chars = 8), "courseList": courses}
@@ -77,7 +78,7 @@ allCoursesPipeline = [
 
 # Use the pipeline to get the list of courses
 courses = col.aggregate(allCoursesPipeline).next()["allCourses"]
-print("There are " + str(len(courses)) + " courses in the database")
+print(str(len(courses)) + " courses will be inserted into the database")
 
 # Insert students into the database
 col = db["students"]
@@ -104,6 +105,7 @@ for c in courses:
     # Insert students taking class into the database
     db = client[c]
     col = db["students"]
+    # Make sure I'm not trying to insert an empty list
     if(len(sic) > 0):
         col.insert_many(sic)
     print("Inserted " + str(len(sic)) +" student(s) into " + c + ".students")
@@ -133,7 +135,9 @@ for c in courses:
 
     # Inserting grades into the database
     col = db["metrics"]
-    col.insert_many(grades)
-    print("Inserted " + str(len(grades)) + " grades into " + c + ".metrics")
+    # Make sure I'm not trying to insert an empty list
+    if(len(grades) > 0):
+        col.insert_many(grades)
+        print("Inserted " + str(len(grades)) + " grades into " + c + ".metrics")
 
     print("Completed inserting data for " + c + " class " + str(courses.index(c) + 1) + " of " + str(len(courses)) + " classes")
