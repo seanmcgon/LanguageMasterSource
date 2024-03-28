@@ -13,9 +13,11 @@ export const disconnectSocket = () => {
   socket.disconnect();
 };
 
+//change to student email
 export const verifyStudent = (studentName, studentPassword, studentVerified) => {
   //we send the studentName and password and get back the boolean
-
+  //function that checks before emitting
+  //if good then send else don't
   socket.emit('studentInfo', studentName, studentPassword);
   socket.on("studentVerification", studentVerified);
 };

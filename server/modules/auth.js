@@ -21,4 +21,7 @@ function studentMatchDB(studentName, studentPassword) {
     return studentsArr.some(student => student === studentName);
 }
 
+
+
+
 module.exports = { verifyStudentData };

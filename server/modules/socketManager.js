@@ -24,7 +24,8 @@ function initSocket(server) {
 
         //pass in the socket and call the function for the needed communication
         verifyStudentData(socket);
-
+        //verifyTeacherData(socket
+        //)
         
         // socket.on('disconnect', () => {
         //     console.log("numClients connected", --numConnected);

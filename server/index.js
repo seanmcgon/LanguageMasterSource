@@ -10,7 +10,7 @@ const server = createServer(app);
 //app is passed to createServer which creates an HTTP server that uses the Express app to handle requests
 
 
-const PORT = 3000;
+const PORT = 3001;
 server.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });

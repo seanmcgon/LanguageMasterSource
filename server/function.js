@@ -3,8 +3,9 @@ const { MongoClient } = require('mongodb');
 const { faker } = require('@faker-js/faker');
 const fs = require('node:fs');
 const { create } = require('node:domain');
+const { TextEncoder } = require('util');
 
-const connectionString = "mongodb+srv://mkandeshwara:0CgF5I8hwXaf88dy@cluster0.tefxjrp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const connectionString = "mongodb+srv://mkandeshwara:0CgF5I8hwXaf88dy@cluster0.tefxjrp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0&ssl=true";
 const client = new MongoClient(connectionString);
 
 function checkValidityOfEmail(emailAddress){
@@ -46,7 +47,7 @@ async function createTeacher(firstName,lastName,teacherEmail, password){
     db = client.db("UserData");
     col = await db.collection("teachers");
     const booE = checkValidityOfEmail(teacherEmail);
-  const booP = checkValidityOfPassword(password);
+    const booP = checkValidityOfPassword(password);
     let courses = [];
     if(booE && booP){
     let result = {name: firstName.trim() + " " + lastName.trim(), email: teacherEmail.trim(),password: password.trim(),courseList: courses};
