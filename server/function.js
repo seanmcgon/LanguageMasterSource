@@ -31,6 +31,19 @@ async function verifyTeacher(teacherEmail, password){
   await client.close();
   }
 }
+async function verifyStudent(studentEmail, password){
+  try{
+    await client.connect();
+    db = client.db("UserData");
+  col = await db.collection("students");
+  let result = await col.find({$and:[{email: studentEmail}, {password: password}]}).toArray();
+  return result.length == 1 ? true: false;
+  }
+  finally{
+  await client.close();
+  }
+}
+
 
 
 async function createTeacher(firstName,lastName,teacherEmail, password){
