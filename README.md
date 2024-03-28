@@ -1,25 +1,11 @@
 Part 1: Featureless Live Product Website: 
 Once you complete the steps in part 2, the website should be running at http://localhost:3000/. 
 
-Testing Login Button
-Test login with existing user- should see positive UI and terminal feedback
-Email: Stephen.Calderon@gmail.com"
-Password: OqzGbcWE
-Test login with non-existing user- should see negative UI and terminal feedback 
-Email: csRocks@umass.edu"
-Password: 320
-Test Sign Up Button
-Test sign up, should see positive feedback
-Email: csRocks@gmail.com"
-Password: 320
-We are still integrating checks and features here
-Test Login After Creation of New User- should see positive UI and terminal feedback
-Email: csRocks@umass.edu"
-Password: 320
-Test persistence (database functionality):
-Refresh the page either manually or by clicking the title button
-Test number 3 again, it should still work
-Feel free to do additional testing
+Features that can be used and tested:
+  Login
+  Signup
+
+Persistence is built in and UI and terminal feedback is incorporated for all user actions
 
 
 Part 2: Usage and Development Material
@@ -46,8 +32,9 @@ Follow Source control and build process above
 In the “databaseUsers.js” in server directory, we have 2 active functions in total (the rest are just helpers
 
 The function verifyTeacher: this function takes two arguments: teacherEmail, and password. This function will check whether the given information matches any data in our database. It returns the boolean value of whether it found a matching teacher user.
-The query used in this function is find(). Then, if it finds any matching data, it will return True. How does it work? First of all, the function retrieves information as BSON form, then we have to make it return an array by using toArray() method. If the returned array only contains one element, it should return true.
+
 The function createTeacher: this function will return true if it successfully creates a student, and it will update the new teacher to the database. This function needs two supporting functions: checkValidityOfEmail and checkValidityOfPassword to make sure the given email and password are correct forms. If one of them is not valid, the function logs the message error.
+
 To run these functions:
 Option 1: run via server.test.js : This file is the place where we add tests for functions, so you could add your own test if you want. Run “npm run test”
 Option 2: Call and execute the functions yourself: At the end of the file, you can simply write the order for which function you want to run: for example createTeacher(“FirstName”, “LastName”, “Email”, “Password”). Run “node function.js”
