@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { verifyStudent } from './socket';
 
-
 const Login = () => {
-  //states to handle the student status
-  const [studentVerified, setStudentVerified] = useState('');
   const [studentName, setStudentName] = useState(''); 
   const [studentPassword, setStudentPassword] = useState('');
+  const [loginMessage, setLoginMessage] = useState(''); // State for login message
 
   const handleNameChange = (e) => {
     setStudentName(e.target.value);
@@ -16,21 +14,22 @@ const Login = () => {
     setStudentPassword(e.target.value);
   };
 
-  const handleSubmit = () => {
-    //handleSubmit is called when a student clicks the login button
-    //we call verify student and pass in the student's information to get a response from the backend
-    //verificationStatus is the response from the back-end
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
     verifyStudent(studentName, studentPassword, (verificationStatus) => {
-      console.log(verificationStatus);
-      setStudentVerified(verificationStatus);
+      if (verificationStatus) {
+        setLoginMessage('Sign in successful');
+      } else {
+        setLoginMessage('Invalid username/password');
+      }
     });
   };
 
   return (
-    <div>
+    <form onSubmit={handleSubmit}>
       <div>
         <label>
-          Enter Name:
+          Enter Email:
           <input type="text" value={studentName} onChange={handleNameChange} />
         </label>
       </div>
@@ -40,11 +39,10 @@ const Login = () => {
           <input type="password" value={studentPassword} onChange={handlePasswordChange} />
         </label>
       </div>
-      <button className = "submit-button" onClick={handleSubmit}>Login</button>
-      <h2>{studentVerified ? 'Student Verified' : 'Student Not Verified'}</h2>
-    </div>
+      <button type="submit" className="submit-button">Login as Teacher</button>
+      <div>{loginMessage}</div> {/* Display the login message */}
+    </form>
   );
 };
 
 export default Login;
-

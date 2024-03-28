@@ -7,7 +7,7 @@ describe('the function should add new teacher',() =>{
   it('Test create teacher', async() => {
     const firstName = "huy";
     const lastName = "Gu";
-    const email = "hugy@gmaki.sut";
+    const email = "hugy@gmail.sut";
     const password = "uhkjhku";
   
     await createTeacher(firstName, lastName, email, password);

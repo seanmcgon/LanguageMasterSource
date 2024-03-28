@@ -1,5 +1,5 @@
 const { Server } = require("socket.io");
-const { verifyStudentData } = require("./auth");
+const { verifyTeacherData, createTeacherAccount} = require("./auth");
 
 
 
@@ -23,8 +23,8 @@ function initSocket(server) {
         //we use imported modules to keep code clean 
 
         //pass in the socket and call the function for the needed communication
-        verifyStudentData(socket);
-        //verifyTeacherData(socket
+        verifyTeacherData(socket);
+        createTeacherAccount(socket);
         //)
         
         // socket.on('disconnect', () => {
