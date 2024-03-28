@@ -71,4 +71,4 @@ async function createTeacher(firstName,lastName,teacherEmail, password){
   await client.close();
   }
   }
-  module.exports = {createTeacher, verifyTeacher};
+ module.exports = {createTeacher, verifyTeacher, verifyStudent};
