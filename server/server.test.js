@@ -47,4 +47,16 @@ describe('the function should add new teacher',() =>{
   });
  });
 
+ const { getGoogleTranscription } = require('./googleSpeech.js');
+ const fs = require('fs');
+   
+ describe('getGoogleTranscription function should return the string correctly', () => {
+   it('transcribes audio file from URL', async () => {
+     const audioUrl = 'https://www2.cs.uic.edu/~i101/SoundFiles/preamble10.wav';
+     const expectedTranscription = 'we the people of the United States in order to form a more perfect union establish justice insure domestic tranquility provide for the common defense';   
+     const transcription = await getGoogleTranscription(audioUrl);
+     expect(transcription).toEqual(expectedTranscription);
+   });
+ });
+
 
