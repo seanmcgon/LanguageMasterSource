@@ -106,3 +106,40 @@ body {
   background: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
   pointer-events: none;
 }
+
+#createClassBtn {
+  position: absolute;
+  width: 175px;
+  top: 3.5%;
+  left: 93%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #881c1c;
+  color: white;
+  font-size: 18px;
+  padding: 8px 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  Font-family: Open Sans, Helvetica, and Arial;
+}
+
+#createClassBtn:hover {
+  background-color: #521111;
+}
+
+.popupTitle {
+  font-weight: bold;
+  font-size: 28px;
+  color: #881c1c;
+}
+
+#formBtn {
+  margin-left: 10px;
+}
+
+#invalidClass {
+  font-size: 12px;
+  margin-top: 10px;
+  color: red;
+}
