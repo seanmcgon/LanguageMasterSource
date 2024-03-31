@@ -1,9 +1,15 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
 import { useState } from "react";
 
 function create(className, setInput, submitToServer, hidePopup, showError) {
+  if (className.length < 1 || className.length > 50) {
+    showError(true);
+    setInput("");
+    return;
+  }
   const result = submitToServer(className);
   if (result) {
     showError(false);
@@ -35,7 +41,6 @@ export default function CreateClassPopup(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h5>Name your class:</h5>
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -48,21 +53,28 @@ export default function CreateClassPopup(props) {
             );
           }}
         >
-          <input
+          <Form.Label htmlFor="className">Name your class:</Form.Label>
+          <Form.Control
+            type="text"
+            id="className"
+            aria-describedby="helpBlock"
             value={input}
-            onInput={(e) => setInput(e.target.value)}
-            name="name"
+            onChange={(e) => setInput(e.target.value)}
             autoComplete="off"
           />
-          <Button id="formBtn" variant="primary" type="submit">
+          {showError && (
+            <p id="invalidClass">
+              Class name is invalid or already exists. Please try again
+            </p>
+          )}
+          <Form.Text id="helpBlock" muted>
+            Must be 1-50 characters
+          </Form.Text>
+          <br/> <br/>
+          <Button variant="primary" type="submit">
             Create
           </Button>
         </form>
-        {showError && (
-          <p id="invalidClass">
-            Class name is invalid or already exists. Please try again
-          </p>
-        )}
       </Modal.Body>
     </Modal>
   );

@@ -32,7 +32,7 @@ const App = () => {
       <CreateClassPopup
         show={modalShow}
         onHide={() => setModalShow(false)}
-        handleSubmission={(className) => false}
+        handleSubmission={(className) => true}
       />
     </>
   );
