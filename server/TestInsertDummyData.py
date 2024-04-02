@@ -128,6 +128,7 @@ class TestInsertDummyData(unittest.TestCase):
     # TODO: Test that for every flashcard, each student has a grade
     # TODO: Check that no collections anywhere have duplicates
     # TODO: Check that the only databases are the class dbs, UserData, the default dbs, and Quoc's test db
+    # TODO: Change loop which processes finds into .toArray()
 
 if __name__ == '__main__':
     unittest.main()
