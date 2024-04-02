@@ -4,10 +4,14 @@ import React, { useState } from "react";
 function LoginForm() {
   const [isTeach, setTeach] = useState(false);
   return (
-    <div class="myform bg-dark">
+    <div class="myform bg-dark fade-in">
       <h1 class="text-center">Welcome {isTeach ? "Teacher" : "Student"}</h1>
       <form>
-        <button class="btn btn-role bg-transparent">
+        <button
+          type="button"
+          class="btn btn-role bg-transparent"
+          onClick={() => setTeach(!isTeach)}
+        >
           I'm a {isTeach ? "Student" : "Teacher"}
         </button>
         <div class="mb-3 mt-4">

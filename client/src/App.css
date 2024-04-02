@@ -16,11 +16,11 @@ body {
   padding: 20px;
 }
 
-.login-button {
+.login-button, .signup-button {
   padding: 10px 20px;
   font-size: 16px;
   color: #fff;
-  background-color: #007bff;
+  background-color: #881c1c; /* Maroon red background */
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -28,38 +28,112 @@ body {
   transition: background-color 0.3s, transform 0.2s; /* Smooth transition for background color and transform */
 }
 
-.login-button:hover {
-  background-color: #0069d9; /* Slightly darker blue on hover */
+.login-button:hover, .signup-button:hover {
+  background-color: #521111; /* Darker shade for hover */
   transform: scale(1.1); /* Slightly increase size on hover */
 }
 
-.login-button:active {
-  background-color: #005cbf; /* Even darker blue when clicked */
+.login-button:active, .signup-button:active {
+  background-color: #3a0d0d; /* Even darker shade when clicked */
   transform: scale(0.95); /* Slightly decrease size when clicked */
 }
 
+.banner {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.banner-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.banner .btn {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: #881c1c; /* Consistent with other buttons */
+  color: white;
+  font-size: 24px;
+  padding: 16px 32px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.banner .btn:hover {
+  background-color: #521111;
+}
+
+.banner-gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
+  pointer-events: none;
+}
 .submit-button {
   padding: 10px 20px;
   font-size: 16px;
   font-weight: bold;
-  color: #fff;
-  background-color: #4caf50; /* Green background */
-  border: none;
+  color: #333; /* Dark text color for contrast */
+  background-color: #fff; /* White background */
+  border: 2px solid #881c1c; /* Maroon border to tie it with the theme */
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .submit-button:hover {
-  background-color: #45a049; /* Darker green background on hover */
-  transform: scale(1.1); /* Slightly increase size on hover */
+  color: #fff; /* White text on hover */
+  background-color: #881c1c; /* Maroon background on hover */
 }
 
 .submit-button:active {
-  background-color: #397d35; /* Even darker green when clicked */
-  transform: scale(0.95); /* Slightly decrease size when clicked */
+  background-color: #521111; /* Darker maroon when clicked */
+  color: #fff; /* Maintain white text when active/clicked */
+}
+.login-button, .signup-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #881c1c;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0 5px;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
-h1 {
+.login-button:hover, .signup-button:hover {
+  background-color: #521111;
+}
+
+.login-button.active, .signup-button.active {
+  font-weight: bold;
+  transform: scale(1.1);
+  background-color: #521111;
+}
+
+.banner-text {
+  color: white;
+  font-size: 32px; /* Adjust size as needed */
+  font-weight: bold;
+  position: absolute;
+  top: 40%; /* Move the text up by decreasing the percentage */
+  left: 35%;
+  transform: translate(-50%, -50%);
+  z-index: 2; /* Ensure text is above the gradient overlay */
   text-align: center;
+  width: 80%; /* Adjust width as needed */
 }

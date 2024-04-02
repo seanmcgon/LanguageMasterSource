@@ -7,12 +7,12 @@ import "./Login.css";
 let openButton = (
   <button
     type="button"
-    class="btn btn-primary"
+    class="login-button"
     data-bs-toggle="modal"
     // ModalForm is the id of the popup
     data-bs-target="#LoginForm"
   >
-    Launch Modal Form
+    Login
   </button>
 );
 
@@ -37,7 +37,7 @@ function LoginModal() {
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
-              <LoginForm/>
+              <LoginForm />
             </div>
           </div>
         </div>

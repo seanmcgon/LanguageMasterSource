@@ -15,7 +15,7 @@
 }
 
 .btn-role {
-  color:white
+  color: white;
 }
 
 h1 {
@@ -73,8 +73,4 @@ p a {
 }
 p a:hover {
   color: #fff;
-}
-
-.bg-transparent {
-  background: transparent;
 }

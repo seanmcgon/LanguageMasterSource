@@ -1,21 +1,55 @@
 import React, { useState } from "react";
 import Login from "./components/Login/Login.js";
-import "./App.css"; // Import the CSS file
+// import Login from "./components/login";
+import Banner from "./components/banner";
+import SignUpForm from "./components/signup";
+import ClassMenu from "./components/Class/ClassMenu.js";
+import "./App.css";
 
 const App = () => {
-  // State to manage the visibility of the Login component
   const [showLogin, setShowLogin] = useState(false);
+  const [showSignup, setShowSignup] = useState(false);
+
+  const handleLoginClick = () => {
+    setShowLogin(true);
+    setShowSignup(false); // Hide the signup form when showing the login form
+  };
+
+  const handleSignupClick = () => {
+    setShowSignup(true);
+    setShowLogin(false); // Hide the login form when showing the signup form
+  };
+
+  const refreshPage = () => {
+    window.location.reload();
+  };
 
   return (
-    // <div>
-    //   <h1>Language Master</h1>
-    //   <button className="login-button" onClick={() => setShowLogin(true)}>Login Page</button>
-    //   {showLogin && <Login />}
-    // </div>
     <>
-      <h1>Welcome to Language Master</h1>
-      <Login />
+      <button className="title-button" onClick={refreshPage}>
+        <h1>LanguageMaster Alpha Release</h1>
+      </button>
+      <div>
+        {/* <button className="login-button" onClick={handleLoginClick}>
+          Login
+        </button> */}
+        <Login />
+        <button className="login-button" onClick={handleSignupClick}>
+          Sign up
+        </button>
+      </div>
+      {/* {showLogin && <Login />} */}
+      {showSignup && <SignUpForm />}
+      <Banner
+        handleClick={() => {
+          setShowSignup(true);
+          setShowLogin(false);
+        }}
+      />
+
+      <ClassMenu />
     </>
   );
 };
+
 export default App;
