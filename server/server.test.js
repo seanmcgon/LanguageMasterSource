@@ -59,4 +59,28 @@ describe('the function should add new teacher',() =>{
    });
  });
 
+ describe('getClassesTeacher', () => {
+  it('should return an array of classes for a teacher', async () => {
+    const classes = await getClassesTeacher('johndoe@gmail.com');
+    expect(Array.isArray(classes)).toBe(true);
+  });
+
+  it('should return an empty array if teacher does not exist', async () => {
+    const classes = await getClassesTeacher('nonexistentteacher');
+    expect(classes).toEqual([]);
+  });
+});
+
+describe('getClassesStudent', () => {
+  it('should return an array of classes for a student', async () => {
+    const classes = await getClassesStudent('Stephen.Calderon@gmail.com');
+    expect(Array.isArray(classes)).toBe(true);
+  });
+
+  it('should return an empty array if student does not exist', async () => {
+    const classes = await getClassesStudent('nonexistentstudent');
+    expect(classes).toEqual([]);
+  });
+});
+
 
