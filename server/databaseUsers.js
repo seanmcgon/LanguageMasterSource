@@ -132,4 +132,31 @@ async function createTeacher(firstName,lastName,teacherEmail, password){
     }
     return inserted;
   }
-  module.exports = {createTeacher, verifyTeacher, createStudent, client};
+
+  async function getStudentsInClass(className){
+    // array of students to return
+    let students = [];
+    try{
+      await client.connect();
+      let db = client.db(className);
+      // If the db doesn't exist, then find will just return an empty array,
+      // but when a class is created some teacher must be assigned
+      const teachers = await db.collection("teachers").find().toArray();
+      console.log(teachers);
+      if(teachers.length === 0){
+        throw("Class does not exist");
+      }
+      else{
+        let col = db.collection("students");
+        students = await col.find().toArray();
+      }
+    }
+    catch(err){
+      console.log(err);
+    }
+    finally{
+      await client.close();
+    }
+    return students;
+  }
+  module.exports = {createTeacher, verifyTeacher, createStudent, getStudentsInClass, client};

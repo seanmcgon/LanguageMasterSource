@@ -60,3 +60,23 @@ jest.mock('mongoose')
       expect(console.log).toHaveBeenCalledWith("Both email and password are invalid");
     });
   });
+
+  describe("getStudentsInClass", () => {
+    it("Gets students from existing class", async () => {
+      const students = await mongo.getStudentsInClass("Chinese671_JPYVGX");
+      expect(students.length).toEqual(2);
+      expect(students.map(e => e.email)).toEqual(["Michael.Hinton@gmail.com", "Mark.Wilson@yahoo.com"]);
+    });
+
+    it("Throws an error with non-existent class", async () => {
+      console.log = jest.fn();
+      await mongo.getStudentsInClass("ABCD");
+      expect(console.log).toHaveBeenCalledWith("Class does not exist");
+    });
+
+    it("Returns an empty list for an empty class", async () => {
+      expect(await mongo.getStudentsInClass("English235_JHBWXD")).toEqual([]);
+    });
+
+
+  })
