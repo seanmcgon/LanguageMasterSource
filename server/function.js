@@ -43,12 +43,12 @@ async function createTeacher(firstName,lastName,teacherEmail, password){
     db = client.db("UserData");
     col = await db.collection("teachers");
     const booE = checkValidityOfEmail(teacherEmail);
-  const booP = checkValidityOfPassword(password);
+    const booP = checkValidityOfPassword(password);
     let courses = [];
     if(booE && booP){
-    let result = {name: firstName.trim() + " " + lastName.trim(), email: teacherEmail.trim(),password: password.trim(),courseList: courses};
-    await col.insertOne(result);
-    console.log("Successfully create new teacher");
+      let result = {name: firstName.trim() + " " + lastName.trim(), email: teacherEmail.trim(),password: password.trim(),courseList: courses};
+      await col.insertOne(result);
+      console.log("Successfully create new teacher");
     }
     else if(!booE && booP){
       throw("Email is invalid");
@@ -63,12 +63,46 @@ async function createTeacher(firstName,lastName,teacherEmail, password){
   else{
     throw ("Teacher already exist!");
   }  
-}
-  catch (err){
+  }
+    catch (err){
     console.log(err);
   }
   finally{
-  await client.close();
+    await client.close();
   }
+}
+
+async function getClassesTeacher(teacherEmail) {
+  try {
+    await client.connect();
+    const db = client.db("UserData");
+    const col = db.collection("teachers");
+    const result = await col.findOne({email: teacherEmail.trim() });
+    if (result) {
+      return result.courseList || [];
+    } else {
+      throw("Teacher not found");
+    }
+  } finally {
+    await client.close();
   }
-  module.exports = {createTeacher, verifyTeacher};
+}
+
+async function getClassesStudent(studentEmail) {
+  try {
+    await client.connect();
+    const db = client.db("UserData");
+    const col = db.collection("students");
+    const result = await col.findOne({email: studentEmail.trim() });
+    if (result) {
+      return result.courseList || [];
+    } else {
+      throw "Student not found";
+    }
+  } finally {
+    await client.close();
+  }
+}
+
+module.exports = {createTeacher, verifyTeacher, getClassesTeacher, getClassesStudent};
+
