@@ -68,7 +68,7 @@ jest.mock('mongoose')
       expect(students.map(e => e.email)).toEqual(["Michael.Hinton@gmail.com", "Mark.Wilson@yahoo.com"]);
     });
 
-    it("Throws an error with non-existent class", async () => {
+    it("Throws an error with a non-existent class", async () => {
       console.log = jest.fn();
       await mongo.getStudentsInClass("ABCD");
       expect(console.log).toHaveBeenCalledWith("Class does not exist");
@@ -77,6 +77,18 @@ jest.mock('mongoose')
     it("Returns an empty list for an empty class", async () => {
       expect(await mongo.getStudentsInClass("English235_JHBWXD")).toEqual([]);
     });
+  });
 
+  describe("getTeachersInClass", () => {
+    it("Gets teachers from existing class", async () => {
+      const teachers = await mongo.getTeachersInClass("Chinese671_JPYVGX");
+      expect(teachers.length).toEqual(1);
+      expect(teachers[0].email).toEqual("Stephen.Calderon@gmail.com");
+    });
 
+    it("Throws an error with a non-existent class", async () => {
+      console.log = jest.fn();
+      await mongo.getTeachersInClass("ABCD");
+      expect(console.log).toHaveBeenCalledWith("Class does not exist");
+    })
   })
