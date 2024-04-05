@@ -73,48 +73,51 @@ function createTeacherAccount(socket) {
 }
 
 async function createTeacher(firstName,lastName,teacherEmail, password){
-  if (!password) {
-    return false;
-  }
+  let createdTeacher = false;
+
   let re = verifyTeacher(teacherEmail.trim(), password.trim());
   let boo = false;
   boo = await re.then(e => e);
-  // try{
-  // if(!boo){
-  await client.connect();
-  db = client.db("UserData");
-  col = await db.collection("teachers");
-  const booE = checkValidityOfEmail(teacherEmail);
-  const booP = checkValidityOfPassword(password);
-  let courses = [];
+  try{
+  if(!boo){
+    await client.connect();
+    db = client.db("UserData");
+    col = await db.collection("teachers");
+    const booE = checkValidityOfEmail(teacherEmail);
+    const booP = checkValidityOfPassword(password);
+    let courses = [];
 
-  let result = {name: firstName.trim() + " " + lastName.trim(), email: teacherEmail.trim(),password: password.trim(),courseList: courses};
-  await col.insertOne(result);
-  console.log("Successfully create new teacher",teacherEmail, password);
-    
-  //   else if(!booE && booP){
-  //     throw("Email is invalid");
-  //   }
-  //   else if(booE && !booP){
-  //     throw("Pass is invalid");
-  //   }
-  //   else{
-  //     throw("Both are invalid");
-  //   }
-  // }
-  // else{
-  //   throw ("Teacher already exist!");
-  // }  
-// }
-  // catch (err){
-  //   console.log(err);
-  // }
-  // finally{
-  await client.close();
-  return true;
-  // }
-// }
+    if(booE && booP){
+      let result = {name: firstName.trim() + " " + lastName.trim(), email: teacherEmail.trim(),password: password.trim(),courseList: courses};
+      await col.insertOne(result);
+      createdTeacher = True;
+      console.log("Successfully create new teacher",teacherEmail, password);
+    }
+    else if(!booE && booP){
+      throw("Email is invalid");
+    }
+    else if(booE && !booP){
+      throw("Pass is invalid");
+    }
+    else{
+      throw("Both are invalid");
+    }
+  }
+  else{
+    throw ("Teacher already exist!");
+  }  
 }
+  catch (err){
+    console.log(err);
+  }
+  finally{
+  await client.close();
+  return createdTeacher;
+  }
+  }
+  // }
+// }
+
 // function studentMatchDB(studentName, studentPassword) {
 //     //dummy holder function
 //     console.log("studentName", studentName);
