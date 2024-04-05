@@ -33,6 +33,21 @@ async function verifyTeacher(teacherEmail, password) {
     }
 }
 
+async function verifyStudent(studentEmail, password){
+  try{
+    await client.connect();
+    db = client.db("UserData");
+    col = await db.collection("students");
+    let result = await col.find({$and:[{email: studentEmail}, {password: password}]}).toArray();
+    return result.length == 1 ? true: false;
+  }
+  finally{
+    await client.close();
+  }
+}
+
+
+
 async function createTeacher(firstName, lastName, teacherEmail, password) {
     let createdTeacher = false;
 
@@ -127,6 +142,56 @@ async function createClass(className, teacherEmail) {
     return classCreated;
 }
 
+async function getStudentsInClass(className){
+  // array of students to return
+  let students = [];
+  try{
+    await client.connect();
+    let db = client.db(className);
+    // If the db doesn't exist, then find will just return an empty array,
+    // but when a class is created some teacher must be assigned
+    const teachers = await db.collection("teachers").find().toArray();
+    if(teachers.length === 0){
+      throw("Class does not exist");
+    }
+    else{
+      let col = db.collection("students");
+      students = await col.find().toArray();
+    }
+  }
+  catch(err){
+    console.log(err);
+  }
+  finally{
+    await client.close();
+  }
+  return students;
+}
+
+async function getTeachersInClass(className){
+  // array of students to return
+  let teachers = [];
+  try{
+    await client.connect();
+    let db = client.db(className);
+    let col = db.collection("teachers");
+    // If the db doesn't exist, then find will just return an empty array,
+    // but when a class is created some teacher must be assigned
+    teachers = await col.find().toArray();
+    if(teachers.length === 0){
+      throw("Class does not exist");
+    }
+  }
+  catch(err){
+    console.log(err);
+  }
+  finally{
+    await client.close();
+  }
+  return teachers;
+}
+
+
 async function getClassesTeacher(teacherEmail) {
   try {
     await client.connect();
@@ -159,4 +224,49 @@ async function getClassesStudent(studentEmail) {
   }
 }
 
-module.exports = { createTeacher, verifyTeacher, createClass, getClassesTeacher, getClassesStudent}
+async function createStudent(firstName, lastName, studentEmail, password){
+  // boolean to return based on whether the student is returned or not
+  let inserted = false;
+  try{
+    // Connect to db and go to student data collection
+    await client.connect();
+    let db = client.db("UserData");
+    let col = db.collection("students");
+
+    // Check that the email isn't already in the database
+    if((await col.find({email: studentEmail.trim()}).toArray()).length === 0){
+      // Booleans for valdidity of email and password
+      let validEmail = checkValidityOfEmail(studentEmail.trim());
+      let validPass = checkValidityOfPassword(password.trim());
+      // If all is correct, insert student and set return boolean to whether student is correctly inserted
+      if(validEmail && validPass){
+        await col.insertOne({name: firstName.trim() + " " + lastName.trim(), email: studentEmail.trim(), password: password.trim(), courseList: []});
+        inserted = true;
+      }
+      // One or both of the password and email are invalid, throw an error corresponding to which are invalid
+      else if(!validEmail && validPass){
+        throw("Email is invalid");
+      }
+      else if(validEmail && !validPass){
+        throw("Password is invalid");
+      }
+      else{
+        throw("Both email and password are invalid");
+      }
+    }
+    else{
+      throw("Student already exists!");
+    }
+  }
+  catch(err){
+    console.log(err);
+  }
+  finally{
+    await client.close();
+  }
+  return inserted;
+}
+
+
+
+module.exports = { createTeacher, createStudent, verifyTeacher, verifyStudent, createClass, getClassesTeacher, getClassesStudent, getStudentsInClass, getTeachersInClass, client}
