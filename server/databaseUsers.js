@@ -196,7 +196,42 @@ async function createTeacher(firstName,lastName,teacherEmail, password){
     
 
   }
+ async function enrollClass(className, classID, studentEmail){
+  try{
+  await client.connect();
+  db = client.db("UserData");
+  col = await db.collection("students");
+  const neededData = className + "_" + classID;
+  if(checkValid(neededData)){
+    let student_Data = await col.find({email: studentEmail}).toArray();
+    let student_courses = student_Data[0].courseList;
+    if(student_courses.indexOf(neededData) == -1){
+      student_courses.push(neededData);
+      await col.updateOne({email:studentEmail}, {$set:{courseList: student_courses}});
+      db1 = client.db(neededData);
+      col1 = await db1.collection("students");
+      await col1.insertOne(student_Data[0]);
+    }
+    else{
+      throw("The class already exist");
+    }
+
+  }
+  else{
+    throw("Invalid class");
+  }
+} catch(err){
+  console.log(err);
+}
+finally{
+  await client.close();
+}
+
+}
+
   //createClass("LeagueOfLegend_101","jyhuang@umass.edu");
   //console.log(checkValid("Math"));
-  module.exports = {createTeacher, verifyTeacher, createClass};
+  //enrollClass("Latin281","RXPILU","Troy.Briggs@yahoo.com");
+  module.exports = {createTeacher, verifyTeacher, createClass, enrollClass};
+
 
