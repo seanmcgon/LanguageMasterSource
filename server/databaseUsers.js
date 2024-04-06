@@ -228,10 +228,38 @@ finally{
 }
 
 }
+async function deleteAssignment(className,assignmentName){
+  try{
+  await client.connect();
+  if(checkValid(className)){
+    db = client.db(className);
+    col = await db.collection("assignments");
+    const presense = await col.find({assignment: assignmentName}).toArray();
+    if(presense.length >= 1){
+    await col.deleteMany({assignment: assignmentName});
+    console.log("The assignments have been deleted");
+    }
+    else{
+      throw("No presence of the assignment");
+    }
+  }
+  else{
+    throw("Invalid class");
+  }
+  }
+  catch(error){
+    console.log(error);
+  }
+  finally{
+    await client.close();
+  }
+
+}
 
   //createClass("LeagueOfLegend_101","jyhuang@umass.edu");
   //console.log(checkValid("Math"));
   //enrollClass("Latin281","RXPILU","Troy.Briggs@yahoo.com");
-  module.exports = {createTeacher, verifyTeacher, createClass, enrollClass};
+ // deleteAssignment("Chinese671_JPYVGX","mo");
+  module.exports = {createTeacher, verifyTeacher, createClass, enrollClass,deleteAssignment};
 
 
