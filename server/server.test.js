@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 const request = require('supertest');
 const app = require('./index.js'); 
-const { createTeacher, verifyTeacher, createClass } = require('./databaseUsers.js');
+const { createTeacher, verifyTeacher, createClass, enrollClass } = require('./databaseUsers.js');
 jest.mock('mongoose')
 
 describe('the function should add new teacher',() =>{
