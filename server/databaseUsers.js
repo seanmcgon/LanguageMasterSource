@@ -256,10 +256,38 @@ async function deleteAssignment(className,assignmentName){
 
 }
 
+  async function deleteFromAssignment(className,assignmentName,flashcard_Object){
+    try{
+      await client.connect();
+      if(checkValid(className)){
+        db = client.db(className);
+        col = await db.collection("assignments");
+        const presence = await col.find({assignment: assignmentName}).toArray();
+        if(presence.length >0){
+          await col.deleteMany({$and: [{assignment: assignmentName},{text: flashcard_Object.text}, {translation: flashcard_Object.translation},{audio: flashcard_Object.audio}]})
+        console.log("Done!!!");
+        }
+        else{
+          throw("No data");
+        }
+      }
+      else{
+        throw("Invalid className");
+      }
+
+    }
+    catch(err){
+      console.log(err);
+    }
+    finally{
+      await client.close();
+    }
+
+  }
+
   //createClass("LeagueOfLegend_101","jyhuang@umass.edu");
   //console.log(checkValid("Math"));
   //enrollClass("Latin281","RXPILU","Troy.Briggs@yahoo.com");
  // deleteAssignment("Chinese671_JPYVGX","mo");
-  module.exports = {createTeacher, verifyTeacher, createClass, enrollClass,deleteAssignment};
-
-
+ //deleteFromAssignment("Chinese671_JPYVGX","momentum", {text: "more",translation:"perf", audio: "https://www.morris.com/"});
+  module.exports = {createTeacher, verifyTeacher, createClass, enrollClass,deleteAssignment,deleteFromAssignment};
