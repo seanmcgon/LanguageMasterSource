@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 const request = require('supertest');
 const app = require('./index.js'); 
-const { createTeacher, verifyTeacher, createClass, enrollClass } = require('./databaseUsers.js');
+const { createTeacher, verifyTeacher, createClass, enrollClass, deleteAssignment } = require('./databaseUsers.js');
 jest.mock('mongoose')
 
 describe('the function should add new teacher',() =>{
@@ -108,6 +108,62 @@ describe('this suit will test the function Enroll Class',() =>{
   col1 = await db1.collection("students");
   const test_student_list = await col1.find({email: email}).toArray();
   expect(test_student_list.length).toEqual(1);
+    }
+    catch(error){
+      throw (error);
+    }
+    finally{
+      await client.close();
+    }
+  });
+});
+describe('this suit will test the function delete Assignment',() =>{
+  it('check the presence of the assingment in the class first, then delete, and check the presence again. In this case, the assignments are already there', async() => {
+    const connectionString = "mongodb+srv://mkandeshwara:0CgF5I8hwXaf88dy@cluster0.tefxjrp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0&ssl=true";
+    const client = new MongoClient(connectionString);
+    try{
+    const class_Name = "Chinese671_JPYVGX";
+    const assignment_name = "momentum";
+    await client.connect();
+    db = client.db(class_Name);
+    col = await db.collection("assignments");
+    // Test the the presence of assignemnts in the given class
+  const presence_of_assignments = (await col.find({assignment: assignment_name}).toArray());
+  expect(presence_of_assignments.length).toBeGreaterThan(0);
+  await deleteAssignment(class_Name, assignment_name);
+ // Test the the presence of assignemnts in the given class after deleting
+ await client.connect();
+ db1 = client.db(class_Name);
+ col1 = await db1.collection("assignments");
+  const presence_after = await col1.find({assignment: assignment_name}).toArray();
+  expect(presence_after.length).toEqual(0);
+    }
+    catch(error){
+      throw (error);
+    }
+    finally{
+      await client.close();
+    }
+  });
+  it('check the presence of the assingment in the class first, then delete, and check the presence again. In this case, the assignments are not there', async() => {
+    const connectionString = "mongodb+srv://mkandeshwara:0CgF5I8hwXaf88dy@cluster0.tefxjrp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0&ssl=true";
+    const client = new MongoClient(connectionString);
+    try{
+    const class_Name = "Chinese671_JPYVGX";
+    const assignment_name = "momentum";
+    await client.connect();
+    db = client.db(class_Name);
+    col = await db.collection("assignments");
+    // Test the the presence of assignemnts in the given class
+  const presence_of_assignments = (await col.find({assignment: assignment_name}).toArray());
+  expect(presence_of_assignments.length).toEqual(0);
+  await deleteAssignment(class_Name, assignment_name);
+ // Test the the presence of assignemnts in the given class after deleting
+ await client.connect();
+ db1 = client.db(class_Name);
+ col1 = await db1.collection("assignments");
+  const presence_after = await col1.find({assignment: assignment_name}).toArray();
+  expect(presence_after.length).toEqual(0);
     }
     catch(error){
       throw (error);
