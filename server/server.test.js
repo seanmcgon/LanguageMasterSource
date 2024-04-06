@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 const request = require('supertest');
 const app = require('./index.js'); 
-const { createTeacher, verifyTeacher, createClass, enrollClass, deleteAssignment } = require('./databaseUsers.js');
+const { createTeacher, verifyTeacher, createClass, enrollClass, deleteAssignment, deleteFromAssignment } = require('./databaseUsers.js');
 jest.mock('mongoose')
 
 describe('the function should add new teacher',() =>{
@@ -164,6 +164,35 @@ describe('this suit will test the function delete Assignment',() =>{
  col1 = await db1.collection("assignments");
   const presence_after = await col1.find({assignment: assignment_name}).toArray();
   expect(presence_after.length).toEqual(0);
+    }
+    catch(error){
+      throw (error);
+    }
+    finally{
+      await client.close();
+    }
+  });
+});
+describe('this suit will test the function delete object from a given Assignment',() =>{
+  it('delete only ones that match the object preference', async() => {
+    const connectionString = "mongodb+srv://mkandeshwara:0CgF5I8hwXaf88dy@cluster0.tefxjrp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0&ssl=true";
+    const client = new MongoClient(connectionString);
+    try{
+    const class_Name = "Chinese671_JPYVGX";
+    const assignment_name = "bad";
+    await client.connect();
+    db = client.db(class_Name);
+    col = await db.collection("assignments");
+    // Test the the presence of assignemnts in the given class
+  const presence_of_assignments = (await col.find({assignment: assignment_name}).toArray());
+  expect(presence_of_assignments.length).toEqual(3);
+  await deleteFromAssignment(class_Name, assignment_name,{text: "international", translation: "low",audio: "http://www.webster-durham.info/"});
+ // Test the the presence of assignemnts in the given class after deleting
+ await client.connect();
+ db1 = client.db(class_Name);
+ col1 = await db1.collection("assignments");
+  const presence_after = await col1.find({assignment: assignment_name}).toArray();
+  expect(presence_after.length).toEqual(2);
     }
     catch(error){
       throw (error);
