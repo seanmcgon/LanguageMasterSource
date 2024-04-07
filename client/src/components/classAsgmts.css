@@ -35,3 +35,7 @@
 .g-4 {
   margin-top: 5px;
 }
+
+.custom-link {
+  text-decoration: none;
+}
