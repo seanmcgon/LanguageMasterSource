@@ -1,43 +1,54 @@
-// Subcomponents
 import LoginForm from "./LoginForm.js";
-// CSS file
 import "./Login.css";
+import 'bootstrap/dist/js/bootstrap.bundle';
+  import Bootstrap from 'bootstrap/dist/js/bootstrap.bundle';
 
-// Button for opening Login Modal
-let openButton = (
-  <button
-    type="button"
-    class="login-button"
-    data-bs-toggle="modal"
-    // ModalForm is the id of the popup
-    data-bs-target="#LoginForm"
-  >
-    Login
-  </button>
-);
 
-// Main Function
 function LoginModal() {
+
+const handleSignUpInstead = () => {
+  // Hide the current Login modal
+  const loginModal = Bootstrap.Modal.getInstance(document.getElementById('LoginForm'));
+  loginModal.hide();
+
+  // Show the SignUp modal
+  const signUpModal = new Bootstrap.Modal(document.getElementById('SignUpForm'));
+  signUpModal.show();
+};
   return (
     <>
-      {openButton}
+      <button
+        type="button"
+        className="login-button"
+        data-bs-toggle="modal"
+        data-bs-target="#LoginForm"
+      >
+        Login
+      </button>
       <div
-        class="modal fade"
+        className="modal fade"
         id="LoginForm"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="ModalFormLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog modal-dialog-center modal-fullscreen">
-          <div class="modal-content">
-            <div class="modal-body">
+        <div className="modal-dialog modal-dialog-centered modal-fullscreen">
+          <div className="modal-content">
+            <div className="modal-body">
               <button
                 type="button"
-                class="btn-close btn-close-white"
+                className="btn-close btn-close-white"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
               <LoginForm />
+              <button
+                type="button"
+                className="btn btn-link"
+                onClick={handleSignUpInstead}
+              >
+                Sign Up Instead
+              </button>
             </div>
           </div>
         </div>

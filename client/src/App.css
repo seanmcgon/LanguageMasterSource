@@ -1,11 +1,9 @@
-/* App.css */
-
 /* Global styles */
 body {
   margin: 0;
   font-family: "Arial", sans-serif;
   font-size: 16px;
-  background-color: #f4f4f4;
+  background-color: #fff; /* Set background color to white */
   color: #333;
 }
 
@@ -82,6 +80,7 @@ body {
   background: linear-gradient(to left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
   pointer-events: none;
 }
+
 .submit-button {
   padding: 10px 20px;
   font-size: 16px;
@@ -103,6 +102,7 @@ body {
   background-color: #521111; /* Darker maroon when clicked */
   color: #fff; /* Maintain white text when active/clicked */
 }
+
 .login-button, .signup-button {
   padding: 10px 20px;
   font-size: 16px;
@@ -124,16 +124,73 @@ body {
   transform: scale(1.1);
   background-color: #521111;
 }
-
 .banner-text {
   color: white;
-  font-size: 32px; /* Adjust size as needed */
+  font-size: 32px;
   font-weight: bold;
   position: absolute;
-  top: 40%; /* Move the text up by decreasing the percentage */
+  top: 30%;
+  left: 33%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  text-align: center;
+  width: 80%;
+}
+
+.banner-description {
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  position: absolute;
+  top: 40%;
   left: 35%;
   transform: translate(-50%, -50%);
-  z-index: 2; /* Ensure text is above the gradient overlay */
+  z-index: 2;
   text-align: center;
-  width: 80%; /* Adjust width as needed */
+  width: 80%;
 }
+
+.banner .btn {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  transform: translate(-50%, -50%);
+  background-color: #881c1c;
+  color: white;
+  font-size: 24px;
+  padding: 16px 32px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.banner .btn:hover {
+  background-color: #521111;
+}
+
+@media (max-width: 768px) {
+  .banner-text,
+  .banner-description,
+  .banner .btn {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 90%;
+  }
+}
+
+.title-button {
+  color: maroon;
+  background-color: white; /* Change to your preferred color */
+  border: none;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s; /* Smooth transition for visual effects */
+}
+
+.title-button:hover {
+  background-color: grey-; /* Darker shade for hover */
+  color: white; /* Change text color on hover */
+  cursor: pointer; /* Change cursor to indicate it's clickable */
+}
+
+

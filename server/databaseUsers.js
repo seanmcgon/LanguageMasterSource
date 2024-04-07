@@ -20,18 +20,25 @@ function checkValidityOfEmail(emailAddress){
     return false;
   }
 
-async function verifyTeacher(teacherEmail, password){
-  try{
-    await client.connect();
-    db = client.db("UserData");
-    col = await db.collection("teachers");
-    let result = await col.find({$and:[{email: teacherEmail}, {password: password}]}).toArray();
-    return result.length == 1 ? true: false;
+  async function verifyTeacher(teacherEmail, password) {
+    if (!password) {
+      return false;
+    }
+    try {
+      await client.connect();
+      const db = client.db("UserData");
+      const col = db.collection("teachers");
+      const result = await col.findOne({ email: teacherEmail, password: password });
+      await client.close();
+      return result !== null;
+    } catch (error) {
+      console.error('Error in verifyTeacher:', error);
+      await client.close();
+      return false;
+    } finally {
+      await client.close();
+    }
   }
-  finally{
-  await client.close();
-  }
-}
 
 
 async function createTeacher(firstName,lastName,teacherEmail, password){
@@ -52,7 +59,7 @@ async function createTeacher(firstName,lastName,teacherEmail, password){
     if(booE && booP){
       let result = {name: firstName.trim() + " " + lastName.trim(), email: teacherEmail.trim(),password: password.trim(),courseList: courses};
       await col.insertOne(result);
-      createdTeacher = True;
+      createdTeacher = true;
       console.log("Successfully create new teacher",teacherEmail, password);
     }
     else if(!booE && booP){

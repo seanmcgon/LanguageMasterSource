@@ -26,6 +26,18 @@ export const createStudent = (studentFirstName, studentLastName, studentEmail, s
   //we send the studentName and password and get back the boolean
   //function that checks before emitting
   //if good then send else don't
-  socket.emit('createTeacher', studentFirstName, studentLastName, studentEmail, studentPassword);
-  socket.on("createTeacherStatus", studentCreated);
+  socket.emit('createStudent', studentFirstName, studentLastName, studentEmail, studentPassword);
+  socket.on("createStudentStatus", studentCreated);
+};
+
+export const verifyTeacher = (teacherEmail, teacherPassword, teacherVerified) => {
+  // Emit teacher credentials and listen for verification status
+  socket.emit('teacherInfo', teacherEmail, teacherPassword);
+  socket.on("teacherVerification", teacherVerified);
+};
+
+export const createTeacher = (teacherFirstName, teacherLastName, teacherEmail, teacherPassword, teacherCreated) => {
+  // Emit teacher details and listen for creation status
+  socket.emit('createTeacher', teacherFirstName, teacherLastName, teacherEmail, teacherPassword);
+  socket.on("createTeacherStatus", teacherCreated);
 };
