@@ -2,10 +2,11 @@ const { MongoClient } = require('mongodb');
 const { TextEncoder } = require('util');
 const connectionString = "mongodb+srv://mkandeshwara:0CgF5I8hwXaf88dy@cluster0.tefxjrp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0&ssl=true";
 const client = new MongoClient(connectionString);
+const { verifyTeacher } = require('../databaseUsers'); // Adjusted import path
 
 
 function verifyTeacherData(socket) {
-    socket.on('studentInfo', async (teacherEmail, teacherPassword) => {
+    socket.on('teacherInfo', async (teacherEmail, teacherPassword) => {
       console.log(teacherEmail, teacherPassword)
         let teacherVerified;
         try {
@@ -15,30 +16,12 @@ function verifyTeacherData(socket) {
             teacherVerified = false;
         }
         console.log("verifyTeacher was called and returned value:", teacherVerified);
-        socket.emit("studentVerification", teacherVerified);
+        socket.emit("teacherVerification", teacherVerified);
         return teacherVerified;
     });
 }
 
-async function verifyTeacher(teacherEmail, password) {
-  if (!password) {
-    return false;
-  }
-  try {
-    await client.connect();
-    const db = client.db("UserData");
-    const col = db.collection("teachers");
-    const result = await col.findOne({ email: teacherEmail, password: password });
-    await client.close();
-    return result !== null;
-  } catch (error) {
-    console.error('Error in verifyTeacher:', error);
-    await client.close();
-    return false;
-  } finally {
-    await client.close();
-  }
-}
+
 
 function checkValidityOfEmail(emailAddress){
   const regex = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;

@@ -1,0 +1,13 @@
+.class-bg {
+  max-width: 100%;
+  max-height: auto;
+  object-fit: cover;
+  position: relative;
+}
+
+.class-txt {
+  text-align: center;
+  position: absolute;
+  top: 0;
+  right: 1fr;
+}

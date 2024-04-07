@@ -21,35 +21,29 @@ function checkValidityOfPassword(password) {
     return false;
 }
 
-async function verifyTeacher(teacherEmail, password) {
-    try {
-        await client.connect();
-        const db = client.db("UserData");
-        const col = await db.collection("teachers");
-        const result = await col.find({ $and: [{ email: teacherEmail }, { password: password }] }).toArray();
-        return result.length === 1;
-    } finally {
-        await client.close();
+  async function verifyTeacher(teacherEmail, password) {
+    if (!password) {
+      return false;
     }
-}
-
-async function verifyStudent(studentEmail, password){
-  try{
-    await client.connect();
-    db = client.db("UserData");
-    col = await db.collection("students");
-    let result = await col.find({$and:[{email: studentEmail}, {password: password}]}).toArray();
-    return result.length == 1 ? true: false;
+    try {
+      await client.connect();
+      const db = client.db("UserData");
+      const col = db.collection("teachers");
+      const result = await col.findOne({ email: teacherEmail, password: password });
+      await client.close();
+      return result !== null;
+    } catch (error) {
+      console.error('Error in verifyTeacher:', error);
+      await client.close();
+      return false;
+    } finally {
+      await client.close();
+    }
   }
-  finally{
-    await client.close();
-  }
-}
 
 
-
-async function createTeacher(firstName, lastName, teacherEmail, password) {
-    let createdTeacher = false;
+async function createTeacher(firstName,lastName,teacherEmail, password){
+  let createdTeacher = false;
 
     const re = verifyTeacher(teacherEmail.trim(), password.trim());
     let boo = await re;
@@ -87,6 +81,11 @@ async function updateClassForGivenTeacher(col, teacherEmail, className) {
     let originalCourse = courseL[0].courseList;
     if (!originalCourse.includes(className)) {
         originalCourse.push(className);
+    if(booE && booP){
+      let result = {name: firstName.trim() + " " + lastName.trim(), email: teacherEmail.trim(),password: password.trim(),courseList: courses};
+      await col.insertOne(result);
+      createdTeacher = true;
+      console.log("Successfully create new teacher",teacherEmail, password);
     }
     await col.updateOne({ email: teacherEmail }, { $set: { courseList: originalCourse } });
 }
