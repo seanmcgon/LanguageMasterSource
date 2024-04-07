@@ -5,26 +5,30 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import "./classAsgmts.css";
 
-export default function ClassAsgmts() {
+//Not sure how this will work yet, 
+function loadAsgmt(name, terms) {};
+
+export default function ClassAsgmts({ className, asgmts }) {
   return (
+    // Probably put Suhani's navbar here
     <div id="classAsgmtsBody">
       <div id="classHeading">
-        <h1 id="nameOfClass">Name of Class</h1>
+        <h1 id="nameOfClass">{className}</h1>
       </div>
       <br />
       <h2 id="asgmtsHeader">Assignments:</h2>
       <Row xs={1} md={3} className="g-4">
-        {Array.from({ length: 7 }).map((_, idx) => (
+        {asgmts.map((asgmt, idx) => (
           <Col key={idx}>
             <Card
-              onClick={() => {}}
+              onClick={() => {loadAsgmt(asgmt.name, asgmt.terms)}}
               text="white"
               style={{ cursor: "pointer" }}
               className="custom-card"
             >
               <Card.Body>
-                <Card.Title>Primary Card Title</Card.Title>
-                <Card.Text className="termCount">25 terms</Card.Text>
+                <Card.Title>{asgmt.name}</Card.Title>
+                <Card.Text className="termCount">{asgmt.termCount} terms</Card.Text>
               </Card.Body>
             </Card>
           </Col>
