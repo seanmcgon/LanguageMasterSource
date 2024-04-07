@@ -1,0 +1,37 @@
+#classAsgmtsBody {
+  height: 100vh;
+  background-color: rgb(37, 32, 32);
+  padding-top: 25px;
+  padding-bottom: 25px;
+  padding-left: 5%;
+  padding-right: 5%;
+  font-family: "Arial", sans-serif;
+  overflow: auto;
+}
+
+#nameOfClass {
+  color: white;
+}
+
+#asgmtsHeader {
+  color: white;
+}
+
+.custom-card {
+  background-color: rgb(59, 53, 53);
+  transition: border-color 0.3s ease;
+  cursor: pointer;
+  height: auto;
+}
+
+.custom-card:hover {
+  border-color: red;
+}
+
+.termCount {
+  margin-top: 25px;
+}
+
+.g-4 {
+  margin-top: 5px;
+}
