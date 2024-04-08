@@ -5,6 +5,8 @@ import 'bootstrap/dist/js/bootstrap.bundle.min';
 import Banner from "./components/banner";
 import ClassMenu from "./components/Class/ClassMenu.js";
 import "./App.css";
+//import NavigationBar from "./components/navigationBar.js"     might need to render the nav bar component here 
+
 
 const App = () => {
 
