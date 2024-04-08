@@ -5,6 +5,10 @@ import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import "./classAsgmts.css";
 
+//To see what this page looks like, just visit 'http://localhost:3000/class-asgmts'
+//I used routing in index.js to do that, see that file for additional comments
+//Feel free to ignore that stuff when integrating this component, I just did it so I could easily see what it looked like
+
 export default function ClassAsgmts({ className, asgmts }) {
   return (
     // Probably put Suhani's navbar here
