@@ -1,5 +1,5 @@
 const { Server } = require("socket.io");
-const { verifyTeacherData, createTeacherAccount} = require("./auth");
+const { verifyTeacherData, createTeacherAccount, verifyStudentData, createStudentAccount} = require("./auth");
 
 
 
@@ -10,6 +10,7 @@ function initSocket(server) {
             origin: ["http://localhost:3001"],  
         },
     });
+    disconnectAllClients(io)
 
     let numConnected = 0;
 
@@ -25,6 +26,8 @@ function initSocket(server) {
         //pass in the socket and call the function for the needed communication
         verifyTeacherData(socket);
         createTeacherAccount(socket);
+        verifyStudentData(socket);
+        createStudentAccount(socket);
         //)
         
         // socket.on('disconnect', () => {

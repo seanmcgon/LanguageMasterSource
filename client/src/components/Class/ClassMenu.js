@@ -47,7 +47,7 @@ function ClassMenu() {
                       }
                     >
                       <Tab.Pane eventKey="first">
-                        <Row>
+                        <Row className = "ClassCard">
                           {Class.map((cl, index) => {
                             return <ClassCard key={index} {...cl} />;
                           })}

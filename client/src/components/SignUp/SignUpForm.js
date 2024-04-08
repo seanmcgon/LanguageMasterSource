@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Modal } from 'bootstrap';
 import "./signUp.css";
 import { createStudent, createTeacher } from '../socket'; // Adjust the path as necessary
+import Bootstrap from 'bootstrap/dist/js/bootstrap.bundle';
 
 function SignUp() {
   const [isTeach, setTeach] = useState(false);
@@ -13,8 +14,24 @@ function SignUp() {
   const [message, setMessage] = useState('');
 
   const handleCloseClick = () => {
-    window.location.reload();
-  };
+    const modalElement = document.getElementById('SignUpForm');
+    const signUpModal = Bootstrap.Modal.getInstance(modalElement);
+    if (signUpModal) {
+        signUpModal.hide();
+    }
+
+    // Manually remove the modal backdrop if it doesn't disappear
+    const backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) {
+        backdrop.remove();
+    }
+
+    // Remove 'modal-open' class from body if it's there
+    document.body.classList.remove('modal-open');
+    document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+
+};
+
 
   const handleLoginClick = () => {
     const signUpModal = Modal.getInstance(document.getElementById('SignUpForm'));

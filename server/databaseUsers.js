@@ -41,6 +41,27 @@ function checkValidityOfPassword(password) {
     }
   }
 
+  async function verifyStudent(studentEmail, password) {
+    if (!password) {
+      return false;
+    }
+    try {
+      await client.connect();
+      const db = client.db("UserData");
+      const col = db.collection("students");
+      const result = await col.findOne({ email: studentEmail, password: password });
+      await client.close();
+      return result !== null;
+    } catch (error) {
+      console.error('Error in verifyStudent:', error);
+      await client.close();
+      return false;
+    } finally {
+      await client.close();
+    }
+  }
+  
+
 
 async function createTeacher(firstName,lastName,teacherEmail, password){
   let createdTeacher = false;
@@ -81,6 +102,7 @@ async function updateClassForGivenTeacher(col, teacherEmail, className) {
     let originalCourse = courseL[0].courseList;
     if (!originalCourse.includes(className)) {
         originalCourse.push(className);
+    }
     if(booE && booP){
       let result = {name: firstName.trim() + " " + lastName.trim(), email: teacherEmail.trim(),password: password.trim(),courseList: courses};
       await col.insertOne(result);
@@ -268,4 +290,4 @@ async function createStudent(firstName, lastName, studentEmail, password){
 
 
 
-module.exports = { createTeacher, createStudent, verifyTeacher, verifyStudent, createClass, getClassesTeacher, getClassesStudent, getStudentsInClass, getTeachersInClass, client}
+module.exports = { createTeacher, createStudent, verifyTeacher, verifyStudent, createClass, getClassesTeacher, getClassesStudent, getStudentsInClass, getTeachersInClass}

@@ -4,9 +4,9 @@ import class_bg from "./class-bg.jpg";
 const ClassCard = ({ title, link }) => {
   return (
     <Col size={12} sm={6} md={4}>
-      <div>
+      <div className="class-card-container"> {/* Added container div with relative positioning */}
         <img
-          class="class-bg"
+          className="class-bg" 
           src={class_bg}
           alt=""
           onClick={() => window.open(link)}

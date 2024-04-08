@@ -2,15 +2,32 @@ import React, { useState } from "react";
 import { Modal } from 'bootstrap';
 import "./Login.css";
 import { verifyStudent, verifyTeacher } from '../socket';
+import Bootstrap from 'bootstrap/dist/js/bootstrap.bundle';
 
-function LoginForm() {
+function LoginForm(props) {
   const [isTeach, setTeach] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleCloseClick = () => {
-    window.location.reload();
-  };
+    const modalElement = document.getElementById('LoginForm');
+    const loginModal = Bootstrap.Modal.getInstance(modalElement);
+    if (loginModal) {
+        loginModal.hide();
+    }
+
+    // Manually remove the modal backdrop if it doesn't disappear
+    const backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) {
+        backdrop.remove();
+    }
+
+    // Remove 'modal-open' class from body if it's there
+    document.body.classList.remove('modal-open');
+    document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+
+    // Additionally, check for and remove any 'modal-open' classes on the body
+};
 
   const handleSignUpClick = (e) => {
     e.preventDefault();
@@ -33,15 +50,34 @@ function LoginForm() {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    console.log("clicked button")
+    e.preventDefault();
     const verificationFunction = isTeach ? verifyTeacher : verifyStudent;
-    console.log(verificationFunction)
+
     verificationFunction(email, password, (verificationStatus) => {
-      console.log("Verification status:", verificationStatus);
-      // Handle login success or failure here
+        if (verificationStatus) {
+            const modalElement = document.getElementById('LoginForm');
+            const loginModal = Bootstrap.Modal.getInstance(modalElement);
+            if (loginModal) {
+                loginModal.hide();
+            }
+
+            // Manually remove the modal backdrop
+            const backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) {
+                backdrop.remove();
+            }
+            // Manually remove the modal backdrop
+            document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
+
+            // Additionally, check for and remove any 'modal-open' classes on the body
+            document.body.classList.remove('modal-open');
+            props.onLoginSuccess();
+        } else {
+            console.log("Login failed");
+        }
     });
-  };
+};
+
 
   return (
     <div className="myform" id="LoginForm">

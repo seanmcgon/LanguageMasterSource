@@ -1,20 +1,19 @@
 import LoginForm from "./LoginForm.js";
 import "./Login.css";
-import 'bootstrap/dist/js/bootstrap.bundle';
-  import Bootstrap from 'bootstrap/dist/js/bootstrap.bundle';
+import Bootstrap from 'bootstrap/dist/js/bootstrap.bundle';
 
+function LoginModal(props) { // Accept props here
 
-function LoginModal() {
+  const handleSignUpInstead = () => {
+    // Hide the current Login modal
+    const loginModal = Bootstrap.Modal.getInstance(document.getElementById('LoginForm'));
+    loginModal.hide();
 
-const handleSignUpInstead = () => {
-  // Hide the current Login modal
-  const loginModal = Bootstrap.Modal.getInstance(document.getElementById('LoginForm'));
-  loginModal.hide();
+    // Show the SignUp modal
+    const signUpModal = new Bootstrap.Modal(document.getElementById('SignUpForm'));
+    signUpModal.show();
+  };
 
-  // Show the SignUp modal
-  const signUpModal = new Bootstrap.Modal(document.getElementById('SignUpForm'));
-  signUpModal.show();
-};
   return (
     <>
       <button
@@ -41,7 +40,7 @@ const handleSignUpInstead = () => {
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
-              <LoginForm />
+              <LoginForm onLoginSuccess={props.onLoginSuccess} />
               <button
                 type="button"
                 className="btn btn-link"
