@@ -181,4 +181,32 @@ async function createTeacher(firstName,lastName,teacherEmail, password){
     }
     return teachers;
   }
-  module.exports = {createTeacher, verifyTeacher, createStudent, getStudentsInClass, getTeachersInClass, client};
+
+  async function viewAssignment(className, assignmentName){
+    let cards = [];
+    try{
+      await client.connect();
+      let db = client.db(className);
+      let col = db.collection("teachers");
+      const teachers = await col.find().toArray();
+      // If there are no teachers assigned to the class, then it doesn't exist
+      if(teachers.length === 0){
+        throw("Class does not exist");
+      }
+      col = db.collection("assignments");
+      cards = await col.find({assignment: assignmentName}).toArray();
+      // If there are no cards in the assignment, it doesn't exist
+      if(cards.length === 0){
+        throw("Assignment does not exist");
+      }
+    }
+    catch(err){
+      console.log(err);
+    }
+    finally{
+      await client.close();
+      // Currently cards are in {_id, assignment, card, text, translation, audio}, just want {text, translation, audio} returned
+      return cards.map(e => ({text: e.text, translation: e.translation, audio: e.audio}));
+    }
+  }
+  module.exports = {createTeacher, verifyTeacher, createStudent, getStudentsInClass, getTeachersInClass, viewAssignment, client};

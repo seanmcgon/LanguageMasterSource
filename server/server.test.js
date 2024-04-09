@@ -90,5 +90,28 @@ jest.mock('mongoose')
       console.log = jest.fn();
       await mongo.getTeachersInClass("ABCD");
       expect(console.log).toHaveBeenCalledWith("Class does not exist");
-    })
-  })
+    });
+  });
+
+  describe("viewAssignment", () => {
+    // Works in a typical case, where no errors should be thrown and a valid output should be returned
+    it("Returns existing assignment in correct form", async () => {
+      const cards = await mongo.viewAssignment("Spanish454_QRAPCC", "war");
+      expect(cards.length).toEqual(2);
+      expect(cards.map(e => e.text)).toEqual(["right", "provide"]);
+    });
+
+    // Reacts correctly for class that doesn't exist
+    it("Throws an error for a non-existent class", async () => {
+      console.log = jest.fn();
+      await mongo.viewAssignment("ABCD", "war");
+      expect(console.log).toHaveBeenCalledWith("Class does not exist");
+    });
+
+    // Reacts correctly for assignment that doesn't exist
+    it("Throws an error for a non-existent assignment", async () => {
+      console.log = jest.fn();
+      await mongo.viewAssignment("Spanish454_QRAPCC", "ABCD");
+      expect(console.log).toHaveBeenCalledWith("Assignment does not exist");
+    });
+  });
