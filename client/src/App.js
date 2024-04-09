@@ -1,52 +1,47 @@
+// App.js
+import React, { useState } from 'react';
+import NavBar from "./components/NavBar/NavBar.js";
 import Login from "./components/Login/Login.js";
 import SignUp from "./components/SignUp/signUp.js";
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import Banner from "./components/banner";
 import ClassMenu from "./components/Class/ClassMenu.js";
 import "./App.css";
-import React, { useState } from 'react';
+import { Modal } from 'bootstrap';
 
-// Ala quizlet: place buttons on navbar
-// navbar has components whose visibility is controlled
+
 const App = () => {
+    const [isLoggedIn, setIsLoggedIn] = useState(true);
 
-  const refreshPage = () => {
-    window.location.reload();
+    const showSignUp = () => {
+      const signUpModal = new Modal(document.getElementById('SignUpForm'));
+      signUpModal.show();
   };
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const handleLoginSuccess = () => {
+        setIsLoggedIn(true);
+    };
 
-  // Function to handle login success
-  const handleLoginSuccess = () => {
-    setIsLoggedIn(true);
-  };
 
-  // Function to handle logoff
-  const handleLogoff = () => {
-    setIsLoggedIn(false);
-  };
 
-  return (
-    <>
-      {isLoggedIn ? (
-        <button className="title-button" onClick={handleLogoff}>
-          <h1>Logoff</h1>
-        </button>
-      ) : (
-        <button className="title-button" onClick={refreshPage}>
-          <h1>LanguageMaster Beta Release</h1>
-        </button>
-      )}
-
-      <div>
-        {!isLoggedIn && <Login onLoginSuccess={handleLoginSuccess} />}
-        {!isLoggedIn && <SignUp />}
-      </div>
-      {!isLoggedIn && <Banner handleClick={refreshPage} />}
-      {isLoggedIn && <ClassMenu />}
-    </>
-  );
+    return (
+        <>
+            <NavBar isLoggedIn={isLoggedIn} onLoginSuccess={handleLoginSuccess} />
+            <div>
+                {isLoggedIn ? (
+                    <>
+                        <ClassMenu />
+                    </>
+                ) : (
+                    <>
+                        <Login onLoginSuccess={handleLoginSuccess} />
+                        <SignUp />
+                        <Banner handleClick={() => {showSignUp()}} />
+                    </>
+                )}
+            </div>
+        </>
+    );
 };
-
 
 export default App;

@@ -15,7 +15,7 @@ function SignUp() {
 
   const handleCloseClick = () => {
     const modalElement = document.getElementById('SignUpForm');
-    const signUpModal = Bootstrap.Modal.getInstance(modalElement);
+    const signUpModal = Modal.getInstance(modalElement);
     if (signUpModal) {
         signUpModal.hide();
     }

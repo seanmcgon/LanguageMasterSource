@@ -11,7 +11,7 @@ function LoginForm(props) {
 
   const handleCloseClick = () => {
     const modalElement = document.getElementById('LoginForm');
-    const loginModal = Bootstrap.Modal.getInstance(modalElement);
+    const loginModal = Modal.getInstance(modalElement);
     if (loginModal) {
         loginModal.hide();
     }

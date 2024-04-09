@@ -8,7 +8,7 @@ export default function Banner({handleClick}) {
         <h2 className="banner-description">LanguageMaster is the #1 app for teachers to assist students with pronunciation</h2>
         <img src={bannerImg} alt="Example banner image" className='banner-image'/>
         <div className="banner-gradient-overlay"></div>
-        <button className="btn" onClick={handleClick}>Learn More</button>
+        <button className="btn" onClick={handleClick}>Get Started</button>
       </div>
     );
 }

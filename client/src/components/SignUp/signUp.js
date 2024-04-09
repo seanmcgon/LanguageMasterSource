@@ -7,7 +7,7 @@ import "./signUp.css";
 let openButton = (
   <button
     type="button"
-    className="login-button"
+    className="login-button1"
     data-bs-toggle="modal"
     // Unique ID for the Sign Up modal
     data-bs-target="#SignUpForm"

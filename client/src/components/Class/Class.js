@@ -1,16 +1,16 @@
 export const ClassObj = () => {
   return [
     {
-      title: "Spanish",
+      title: "Arabic for Business",
       link: null,
       //   imgDir: "Class/class-bg.jpg",
     },
     {
-      title: "Chinese 100",
+      title: "LATIN100",
       link: null,
     },
     {
-      title: "Spanish",
+      title: "Classical Chinese",
       link: null,
     },
   ];

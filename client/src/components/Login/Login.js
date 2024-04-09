@@ -18,7 +18,7 @@ function LoginModal(props) { // Accept props here
     <>
       <button
         type="button"
-        className="login-button"
+        className="login-button1"
         data-bs-toggle="modal"
         data-bs-target="#LoginForm"
       >

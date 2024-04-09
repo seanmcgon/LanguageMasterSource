@@ -109,3 +109,7 @@ p a:hover {
 .text-center {
   color: maroon
 }
+
+.login-button1 {
+  visibility: hidden;
+}

@@ -68,11 +68,11 @@ export default function CreateClassPopup(props) {
             </p>
           )}
           <Form.Text id="helpBlock" muted>
-            Must be 1-50 characters
+            {/* Must be 1-50 characters */}
           </Form.Text>
           <br/> <br/>
-          <Button variant="primary" type="submit">
-            Create
+          <Button className = "createButton" type="submit">
+            Create Class
           </Button>
         </form>
       </Modal.Body>
