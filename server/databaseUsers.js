@@ -209,4 +209,34 @@ async function createTeacher(firstName,lastName,teacherEmail, password){
       return cards.map(e => ({text: e.text, translation: e.translation, audio: e.audio}));
     }
   }
-  module.exports = {createTeacher, verifyTeacher, createStudent, getStudentsInClass, getTeachersInClass, viewAssignment, client};
+
+  async function addToAssignment(className, assignmentName, card){
+    let inserted = false;
+    try{
+      await client.connect();
+      let db = client.db(className);
+      let col = db.collection("teachers");
+      const teachers = await col.find().toArray();
+      if(teachers.length === 0){
+        throw("Class does not exist");
+      }
+      col = db.collection("assignments");
+      const cardNum = (await col.find({assignment: assignmentName}).toArray()).length;
+      // This segment of code might have to be deleted, depends on if you can add cards to empty assignments or not though
+      // it throws an error if an assignment doesn't have any cards in it
+      if(cardNum === 0){
+        throw("Assignment does not exist");
+      }
+      await col.insertOne({assignment: assignmentName, card: cardNum, text: card.text, translation: card.translation, audio: card.audio})
+      inserted = true;
+      
+    }
+    catch(err){
+      console.log(err);
+    }
+    finally{
+      await client.close();
+      return inserted;
+    }
+  }
+  module.exports = {createTeacher, verifyTeacher, createStudent, getStudentsInClass, getTeachersInClass, viewAssignment, addToAssignment, client};

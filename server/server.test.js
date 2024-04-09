@@ -115,3 +115,40 @@ jest.mock('mongoose')
       expect(console.log).toHaveBeenCalledWith("Assignment does not exist");
     });
   });
+
+  describe("addToAssignment", () => {
+    it("Inserts flashcard to existing class and existing assignment", async () => {
+      const inserted = await mongo.addToAssignment("Spanish454_QRAPCC", "war", {text: "asdf", translation: "qwer", audio: "zcxv"});
+      expect(inserted).toEqual(true);
+      try{
+        await mongo.client.connect();
+        let db = mongo.client.db("Spanish454_QRAPCC");
+        let col = db.collection("assignments");
+        const card = await col.find({audio: "zcxv"}).toArray();
+        expect(card.length).toEqual(1);
+        expect(card[0].assignment).toEqual("war");
+        expect(card[0].card).toEqual(2);
+        expect(card[0].text).toEqual("asdf");
+        expect(card[0].translation).toEqual("qwer");
+        expect(card[0].audio).toEqual("zcxv");
+        await col.deleteOne({audio: "zcxv"});
+      }
+      finally{
+        await mongo.client.close();
+      }
+    });
+
+    it("Throws an error for a non-existent class", async () => {
+      console.log = jest.fn();
+      const inserted = await mongo.addToAssignment("ABCD", "war", {text: "asdf", translation: "qwer", audio: "zcxv"});
+      expect(inserted).toEqual(false);
+      expect(console.log).toHaveBeenCalledWith("Class does not exist");
+    });
+
+    it("Throws an error for a non-existent assignment", async () => {
+      console.log = jest.fn();
+      const inserted = await mongo.addToAssignment("Spanish454_QRAPCC", "ASDF", {text: "asdf", translation: "qwer", audio: "zcxv"});
+      expect(inserted).toEqual(false);
+      expect(console.log).toHaveBeenCalledWith("Assignment does not exist");
+    });
+  })
