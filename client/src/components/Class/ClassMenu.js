@@ -6,10 +6,25 @@ import ClassObj from "./Class";
 
 import "./ClassMenu.css";
 
-function ClassMenu() {
-  // Class used for testing
-  const Class = ClassObj();
-
+function ClassMenu(props) {
+  const { classes } = props;
+  // const ClassObj = () => {
+  //   return [
+  //     {
+  //       title: "Arabic for Business",
+  //       link: null,
+  //       //   imgDir: "Class/class-bg.jpg",
+  //     },
+  //     {
+  //       title: "LATIN100",
+  //       link: null,
+  //     },
+  //     {
+  //       title: "Classical Chinese",
+  //       link: null,
+  //     },
+  //   ];
+  // };
   return (
     <section className="project" id="projects">
       <Container>
@@ -30,15 +45,7 @@ function ClassMenu() {
                       className="nav-pills mb-5 justify-content-center align-items-center"
                       id="pills-tab"
                     >
-                      {/* <Nav.Item>
-                        <Nav.Link eventKey="first">Tab 1</Nav.Link>
-                      </Nav.Item> */}
-                      {/* <Nav.Item>
-                        <Nav.Link eventKey="second">Tab 2</Nav.Link>
-                      </Nav.Item>
-                      <Nav.Item>
-                        <Nav.Link eventKey="third">Tab 3</Nav.Link>
-                      </Nav.Item> */}
+
                     </Nav>
                     <Tab.Content
                       id="slideInUp"
@@ -48,7 +55,7 @@ function ClassMenu() {
                     >
                       <Tab.Pane eventKey="first">
                         <Row className = "ClassCard">
-                          {Class.map((cl, index) => {
+                          {classes.map((cl, index) => {
                             return <ClassCard key={index} {...cl} />;
                           })}
                         </Row>

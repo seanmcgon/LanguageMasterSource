@@ -1,10 +1,26 @@
 import React, { useState } from 'react';
 import "./NavBar.css";
 import CreateClassPopup from './createClassPopup';
+import { Modal } from 'bootstrap';
+import { Dropdown } from 'react-bootstrap';
 
-function NavBar({ isLoggedIn }) {
-    const [showSignUpModal, setShowSignUpModal] = useState(false);
-    const [showLoginModal, setShowLoginModal] = useState(false);
+function NavBar({ isLoggedIn, userName, onSignOut }) { 
+    const [showCreateClassModal, setCreateClassModal] = useState(false);
+
+    const showSignUp = () => {
+        const signUpModal = new Modal(document.getElementById('SignUpForm'));
+        signUpModal.show();
+    };
+
+    const showLogIn = () => {
+        const signUpModal = Modal.getInstance(document.getElementById('SignUpForm'));
+        if (signUpModal) {
+            signUpModal.hide();
+        }
+
+        const loginModal = new Modal(document.getElementById('LoginForm'));
+        loginModal.show();
+    };
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -18,28 +34,30 @@ function NavBar({ isLoggedIn }) {
                     {!isLoggedIn ? (
                         <>
                             <li className="nav-item">
-                                <a className="nav-link login-button" href="#" onClick={() => setShowLoginModal(true)}>Login</a>
+                                <a className="nav-link login-button" href="#login" onClick={showLogIn}>Login</a>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link signup-button" href="#" onClick={() => setShowSignUpModal(true)}>Sign Up</a>
+                                <a className="nav-link signup-button" href="#signup" onClick={showSignUp}>Sign Up</a>
                             </li>
                         </>
                     ) : (
-                        <>
-                            <li className="nav-item-loginAfter">
-                                <a className="nav-link-special" href="/#">Sign Out</a>
-                            </li>
+                        <>  
+                        <Dropdown>
+                            <Dropdown.Toggle variant="light" id="dropdown-basic">
+                                Profile ({userName})
+                            </Dropdown.Toggle>
+
+                                <Dropdown.Menu>
+                                    <Dropdown.Item href="#action/3.1">View Profile</Dropdown.Item>
+                                    <Dropdown.Item href="#action/3.2">Help</Dropdown.Item>
+                                    <Dropdown.Item onClick={onSignOut}>Sign Out</Dropdown.Item>
+                            </Dropdown.Menu>
+                         </Dropdown>
                             <li className="nav-item-loginAfter">
                                 <a className="nav-link-special" href="/join-class">Join Class</a>
                             </li>
                             <li className="nav-item-loginAfter">
-                                <a className="nav-link-special" href="/#">View Profile</a>
-                            </li>
-                            <li className="nav-item-loginAfter">
-                                <a className="nav-link-color" href="/#" onClick={() => setShowSignUpModal(true)}>Create Class</a>
-                            </li>
-                            <li className="nav-item-loginAfter">
-                                <a className="nav-link-special" href="/#">Help</a>
+                                <a className="nav-link-color" href="#" onClick={() => setCreateClassModal(true)}>Create Class</a>
                             </li>
                         </>
                     )}
@@ -47,7 +65,7 @@ function NavBar({ isLoggedIn }) {
             </div>
 
             {/* Modals */}
-            <CreateClassPopup show={showSignUpModal} onHide={() => setShowSignUpModal(false)} />
+            <CreateClassPopup show={showCreateClassModal} onHide={() => setCreateClassModal(false)} />
         </nav>
     );
 }

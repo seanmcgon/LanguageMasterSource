@@ -17,7 +17,7 @@ let openButton = (
 );
 
 // Main Function
-function SignUpModal() {
+function SignUpModal(props) {
   return (
     <>
       {openButton}
@@ -37,7 +37,7 @@ function SignUpModal() {
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
-              <SignUpForm />
+              <SignUpForm onLoginSuccess={props.onLoginSuccess}/>
             </div>
           </div>
         </div>

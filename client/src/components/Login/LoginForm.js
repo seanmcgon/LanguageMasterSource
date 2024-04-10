@@ -8,6 +8,7 @@ function LoginForm(props) {
   const [isTeach, setTeach] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');  // State for error message
 
   const handleCloseClick = () => {
     const modalElement = document.getElementById('LoginForm');
@@ -16,18 +17,14 @@ function LoginForm(props) {
         loginModal.hide();
     }
 
-    // Manually remove the modal backdrop if it doesn't disappear
     const backdrop = document.querySelector('.modal-backdrop');
     if (backdrop) {
         backdrop.remove();
     }
 
-    // Remove 'modal-open' class from body if it's there
     document.body.classList.remove('modal-open');
     document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
-
-    // Additionally, check for and remove any 'modal-open' classes on the body
-};
+  };
 
   const handleSignUpClick = (e) => {
     e.preventDefault();
@@ -61,23 +58,19 @@ function LoginForm(props) {
                 loginModal.hide();
             }
 
-            // Manually remove the modal backdrop
             const backdrop = document.querySelector('.modal-backdrop');
             if (backdrop) {
                 backdrop.remove();
             }
-            // Manually remove the modal backdrop
             document.querySelectorAll('.modal-backdrop').forEach(backdrop => backdrop.remove());
 
-            // Additionally, check for and remove any 'modal-open' classes on the body
             document.body.classList.remove('modal-open');
-            props.onLoginSuccess();
+            props.onLoginSuccess(email);
         } else {
-            console.log("Login failed");
+            setErrorMessage("Login failed. Please check your email and password.");
         }
     });
-};
-
+  };
 
   return (
     <div className="myform" id="LoginForm">
@@ -118,6 +111,9 @@ function LoginForm(props) {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
+        {errorMessage && <div className="alert alert-danger" role="alert">
+          {errorMessage}
+        </div>}
         <button type="submit" className="btn btn-light mt-3">
           Login
         </button>
