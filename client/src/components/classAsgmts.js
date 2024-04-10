@@ -17,32 +17,43 @@ export default function ClassAsgmts({ className, asgmts }) {
         <h1 id="nameOfClass">{className}</h1>
       </div>
       <br />
-      <h2 id="asgmtsHeader">Assignments:</h2>
-      <Row xs={1} md={3} className="g-4">
-        {asgmts.map((asgmt, idx) => (
-          <Col key={idx}>
-            <Link
-              className="custom-link"
-              to={{
-                pathname: `/asgmtPage/${asgmt.name}`,
-              }}
-            >
-              <Card
-                text="white"
-                style={{ cursor: "pointer" }}
-                className="custom-card"
-              >
-                <Card.Body>
-                  <Card.Title>{asgmt.name}</Card.Title>
-                  <Card.Text className="termCount">
-                    {asgmt.termCount} terms
-                  </Card.Text>
-                </Card.Body>
-              </Card>
-            </Link>
-          </Col>
-        ))}
-      </Row>
+      <h3 id="asgmtsHeader">Assignments:</h3>
+      <div id="asgmtsBody">
+        {asgmts.length > 0 ? (
+          <div id="asgmtsGrid">
+            <Row xs={1} md={3} className="g-4">
+              {asgmts.map((asgmt, idx) => (
+                <Col key={idx}>
+                  <Link
+                    className="custom-link"
+                    to={{
+                      pathname: `/asgmtPage/${asgmt.name}`,
+                    }}
+                  >
+                    <Card
+                      text="white"
+                      style={{ cursor: "pointer" }}
+                      className="custom-card"
+                    >
+                      <Card.Body>
+                        <Card.Title>{asgmt.name}</Card.Title>
+                        <Card.Text className="termCount">
+                          {asgmt.termCount} terms
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </Link>
+                </Col>
+              ))}
+            </Row>
+          </div>
+        ) : (
+          <div>
+            <br />
+            <p>No current assignments</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
