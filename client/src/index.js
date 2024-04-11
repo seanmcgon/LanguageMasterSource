@@ -23,17 +23,17 @@ root.render(
             //Maybe only the class name should be passed via a searchParam (like I did below for the test assignment pages) and
             //then query the backend for the actual assignments? Not sure
             <ClassAsgmts
-              className={"Test Class"}
-              asgmts={[
-                { name: "Lesson 1: Talking in Class", termCount: 20 },
-                { name: "Assignment 2", termCount: 15 },
-                { name: "Assignment 3", termCount: 17 },
-                { name: "Assignment 4", termCount: 25 },
-                { name: "Assignment 5", termCount: 21 },
-                { name: "Assignment 6", termCount: 10 },
-                { name: "Assignment 7", termCount: 12 },
-              ]}
-            />
+            className={"Spanish 100"}
+            asgmts={[
+              { name: "Lesson 1: Talking in Class", termCount: 20 },
+              { name: "Lesson 2: Greetings and Introductions", termCount: 15 },
+              { name: "Lesson 3: Numbers and Colors", termCount: 17 },
+              { name: "Lesson 4: Family and Relationships", termCount: 25 },
+              { name: "Lesson 5: Daily Routines", termCount: 21 },
+              { name: "Lesson 6: Describing People and Places", termCount: 10 },
+              { name: "Lesson 7: Food and Dining", termCount: 12 },
+            ]}
+          />
           }
         />
         {/* I just added these routes so I could test that my assignment buttons actually go somewhere and pass the assignment 

@@ -4,20 +4,22 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import "./classAsgmts.css";
-
-//To see what this page looks like, just visit 'http://localhost:3000/class-asgmts'
-//I used routing in index.js to do that, see that file for additional comments
-//Feel free to ignore that stuff when integrating this component, I just did it so I could easily see what it looked like
+import ViewAssignment from "./viewAssignments.js";
 
 export default function ClassAsgmts({ className, asgmts }) {
   return (
-    // Probably put Suhani's navbar here
+    
     <div id="classAsgmtsBody">
       <div id="classHeading">
         <h1 id="nameOfClass">{className}</h1>
       </div>
       <br />
-      <h3 id="asgmtsHeader">Assignments:</h3>
+      <div id="asgmtsHeaderContainer">
+        <h3 id="asgmtsHeader">Assignments:</h3>
+        <Link to="/createAssignment" className="btn btn-primary">
+          Create Assignment
+        </Link>
+      </div>
       <div id="asgmtsBody">
         {asgmts.length > 0 ? (
           <div id="asgmtsGrid">

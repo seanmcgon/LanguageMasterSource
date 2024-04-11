@@ -10,15 +10,15 @@ function create(className, setInput, submitToServer, hidePopup, showError) {
     setInput("");
     return;
   }
-  const result = submitToServer(className);
-  if (result) {
-    showError(false);
-    setInput("");
-    hidePopup();
-  } else {
-    showError(true);
-    setInput("");
-  }
+  // const result = submitToServer(className);
+  // if (result) {
+  //   showError(false);
+  //   setInput("");
+  //   hidePopup();
+  // } else {
+  //   showError(true);
+  //   setInput("");
+  // }
 }
 
 export default function CreateClassPopup(props) {

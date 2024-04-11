@@ -8,15 +8,18 @@ import ClassMenu from "./components/Class/ClassMenu.js";
 
 import "./App.css";
 import { Modal } from 'bootstrap';
+import ClassAsgmts from './components/ClassAssignments/classAsgmts.js';
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [classList, setClassList] = useState([]);
     const [userEmail, setUserEmail] = useState("");
-    const [userName, setUserName] = useState(""); // Add a state for the user's name
-    const [showLogoutMessage, setShowLogoutMessage] = useState(false);
-    const [currentClass, setCurrentClass] = useState(""); // Renamed state variable
+    const [userName, setUserName] = useState(""); 
+    const [currentClass, setCurrentClass] = useState(""); 
+    const [currentAssignments, setCurrentAssignments] = useState([]); 
+    const [currentAssignment, setCurrentAssignment] = useState(""); 
 
+    const [showLogoutMessage, setShowLogoutMessage] = useState(false);
 
     function getClassesHelper(userEmail) {
         const classesTest = [
@@ -45,6 +48,24 @@ const App = () => {
         }
     };
 
+    const handleClassClick = (className) => {
+        setCurrentClass(className)
+        const testAssignments =[
+            { name: "Lesson 1: Talking in Class", termCount: 20 },
+            { name: "Lesson 2: Greetings and Introductions", termCount: 15 },
+            { name: "Lesson 3: Numbers and Colors", termCount: 17 },
+            { name: "Lesson 4: Family and Relationships", termCount: 25 },
+            { name: "Lesson 5: Daily Routines", termCount: 21 },
+            { name: "Lesson 6: Describing People and Places", termCount: 10 },
+            { name: "Lesson 7: Food and Dining", termCount: 12 },
+          ]
+        try {
+            setCurrentAssignments(testAssignments); 
+        } catch (error) {
+            console.error('Error fetching classes:', error);
+        }
+    };
+
     const handleLoginSuccess = (email, name) => {
         setIsLoggedIn(true);
         setUserEmail(email);
@@ -61,7 +82,11 @@ const App = () => {
             setUserName("");
             setClassList([]);
             setShowLogoutMessage(false);
-        }, 1500); 
+        }, 1000); 
+    };
+
+    const goBackToClassView = () => {
+        setCurrentClass(null);  // Or setCurrentClass('');
     };
 
     return (
@@ -69,7 +94,14 @@ const App = () => {
             <NavBar isLoggedIn={isLoggedIn} userName={userEmail} onSignOut={handleSignOut} />
             <div>
                 {isLoggedIn ? (
-                    <ClassMenu classes={classList} />
+                    currentClass ? (
+                        <>
+                            <button onClick={goBackToClassView} style={{ margin: '10px' }}>Back to Classes</button>
+                            <ClassAsgmts className={currentClass} asgmts={currentAssignments} />
+                        </>
+                    ) : (
+                        <ClassMenu classes={classList} onClassClick={handleClassClick} />
+                    )
                 ) : (
                     <>
                         <Login onLoginSuccess={handleLoginSuccess} />
@@ -88,6 +120,8 @@ const App = () => {
             )}
         </>
     );
-};
+}
+
+
 
 export default App;
