@@ -1,0 +1,60 @@
+.viewAssignment {
+    padding: 10px;
+}
+
+.backButton {
+    background-color: grey; /* or another less prominent color */
+    color: white;
+    border: none;
+    padding: 5px 10px; /* Smaller than the flashCardButton */
+    font-size: 14px; /* Smaller font size */
+    cursor: pointer;
+    transition-duration: 0.4s;
+  }
+  
+  .flashCardButton {
+    background-color: maroon; /* Maroon color for importance */
+    color: white;
+    border: none;
+    padding: 15px 30px; /* Larger padding for emphasis */
+    font-size: 18px; /* Larger font size */
+    cursor: pointer;
+    transition-duration: 0.4s;
+    justify-content: center;
+  }
+  
+  .flashCardButton:hover {
+    background-color: darkred; /* Darken on hover */
+  }
+  
+
+.lessonName {
+    margin-bottom: 20px;
+}
+
+.tableContainer {
+    max-height: 800px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+}
+
+.flashcardTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.flashcardTable th, .flashcardTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.flashcardTable thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f0f0f0;
+}
+
+.audioControl {
+    width: 100%;
+}

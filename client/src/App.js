@@ -9,6 +9,7 @@ import ClassMenu from "./components/Class/ClassMenu.js";
 import "./App.css";
 import { Modal } from 'bootstrap';
 import ClassAsgmts from './components/ClassAssignments/classAsgmts.js';
+import ViewAssignment from './components/ClassAssignments/viewAssignments.js';
 
 const App = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -18,21 +19,23 @@ const App = () => {
     const [currentClass, setCurrentClass] = useState(""); 
     const [currentAssignments, setCurrentAssignments] = useState([]); 
     const [currentAssignment, setCurrentAssignment] = useState(""); 
+    const [currentAssignmentName, setCurrentAssignmentName] = useState(""); 
+
 
     const [showLogoutMessage, setShowLogoutMessage] = useState(false);
 
     function getClassesHelper(userEmail) {
         const classesTest = [
             {
-                title: "Spanish100",
+                title: "Spanish 110",
                 link: null,
             },
             {
-                title: "Arabic for Business",
+                title: "Chinese 187",
                 link: null,
             },
             {
-                title: "Classical Chinese",
+                title: "French 220",
                 link: null,
             },
         ];
@@ -50,17 +53,46 @@ const App = () => {
 
     const handleClassClick = (className) => {
         setCurrentClass(className)
+        //getAssignmentsForClass(className)
         const testAssignments =[
-            { name: "Lesson 1: Talking in Class", termCount: 20 },
-            { name: "Lesson 2: Greetings and Introductions", termCount: 15 },
-            { name: "Lesson 3: Numbers and Colors", termCount: 17 },
-            { name: "Lesson 4: Family and Relationships", termCount: 25 },
-            { name: "Lesson 5: Daily Routines", termCount: 21 },
-            { name: "Lesson 6: Describing People and Places", termCount: 10 },
-            { name: "Lesson 7: Food and Dining", termCount: 12 },
+            { name: "Lesson 1: Greetings and Introductions", termCount: 15 },
+            { name: "Lesson 2: Numbers and Colors", termCount: 17 },
+            { name: "Lesson 3: Family and Relationships", termCount: 25 },
+            { name: "Lesson 4: Daily Routines", termCount: 21 },
+            { name: "Lesson 5: Describing People and Places", termCount: 10 },
+            { name: "Lesson 6: Food and Dining", termCount: 12 },
           ]
         try {
             setCurrentAssignments(testAssignments); 
+        } catch (error) {
+            console.error('Error fetching classes:', error);
+        }
+    };
+
+    const handleAssignmentClick = (assignmentName) => {
+        setCurrentAssignmentName(assignmentName)
+        //getAssignmentsForClass(className)
+        const testAssignment = [
+            { wordName: 'Hola', englishTranslation: 'Hello', audioFile: 'hola.mp3' },
+            { wordName: 'Buenos días', englishTranslation: 'Good morning', audioFile: 'buenos_dias.mp3' },
+            { wordName: 'Buenas tardes', englishTranslation: 'Good afternoon', audioFile: 'buenas_tardes.mp3' },
+            { wordName: 'Buenas noches', englishTranslation: 'Good night', audioFile: 'buenas_noches.mp3' },
+            { wordName: 'Por favor', englishTranslation: 'Please', audioFile: 'por_favor.mp3' },
+            { wordName: 'Gracias', englishTranslation: 'Thank you', audioFile: 'gracias.mp3' },
+            { wordName: 'De nada', englishTranslation: 'You’re welcome', audioFile: 'de_nada.mp3' },
+            { wordName: 'Perdón', englishTranslation: 'Excuse me', audioFile: 'perdon.mp3' },
+            { wordName: 'Lo siento', englishTranslation: 'Sorry', audioFile: 'lo_siento.mp3' },
+            { wordName: 'Sí', englishTranslation: 'Yes', audioFile: 'si.mp3' },
+            { wordName: 'No', englishTranslation: 'No', audioFile: 'no.mp3' },
+            { wordName: '¿Cómo te llamas?', englishTranslation: 'What is your name?', audioFile: 'como_te_llamas.mp3' },
+            { wordName: 'Me llamo...', englishTranslation: 'My name is...', audioFile: 'me_llamo.mp3' },
+            { wordName: '¿Cómo estás?', englishTranslation: 'How are you?', audioFile: 'como_estas.mp3' },
+            { wordName: 'Estoy bien, gracias', englishTranslation: 'I’m fine, thank you', audioFile: 'estoy_bien_gracias.mp3' },
+            
+          ];
+        
+        try {
+            setCurrentAssignment(testAssignment); 
         } catch (error) {
             console.error('Error fetching classes:', error);
         }
@@ -88,17 +120,30 @@ const App = () => {
     const goBackToClassView = () => {
         setCurrentClass(null);  // Or setCurrentClass('');
     };
-
+    const goBackToAssignmentList = () => {
+        setCurrentAssignment(null);
+        setCurrentAssignmentName('');
+    };
+    
     return (
         <>
             <NavBar isLoggedIn={isLoggedIn} userName={userEmail} onSignOut={handleSignOut} />
             <div>
                 {isLoggedIn ? (
-                    currentClass ? (
-                        <>
-                            <button onClick={goBackToClassView} style={{ margin: '10px' }}>Back to Classes</button>
-                            <ClassAsgmts className={currentClass} asgmts={currentAssignments} />
-                        </>
+                    currentAssignment ? (
+                        <ViewAssignment
+                        lessonName={currentAssignmentName}
+                        flashcards={currentAssignment}
+                        onBack={goBackToAssignmentList}
+                    />
+                    ) : currentClass ? (
+                        <ClassAsgmts
+                            className={currentClass}
+                            asgmts={currentAssignments}
+                            onAssignmentClick={handleAssignmentClick}
+                            onBack={goBackToClassView}
+                        />
+
                     ) : (
                         <ClassMenu classes={classList} onClassClick={handleClassClick} />
                     )
@@ -120,6 +165,7 @@ const App = () => {
             )}
         </>
     );
+    
 }
 
 

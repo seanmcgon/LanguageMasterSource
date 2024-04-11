@@ -17,7 +17,7 @@ const AboutComponent = () => {
         Welcome to LanguageMaster, a web app dedicated to helping foreign language students in classrooms. 
         Foreign language teachers can create a class and then create assignments for students to practice their pronunciation.
         Utilizing Google's speech-to-text technology, LanguageMaster's innovative flashcard interface provides 
-        instant feedback to students on each pronounced word, promoting an automated, interactive learning experience. 
+        instant feedback to students on each pronounced word/phrase, promoting an automated, interactive learning experience. 
         This software was developed by students from UMass Amherst's CS 320 Software Engineering Class in Spring 2024.
 
       </p>
