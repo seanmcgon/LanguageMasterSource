@@ -3,7 +3,12 @@ const { verifyTeacherData, createTeacherAccount } = require("./auth");
 
 function initSocket(server) {
   //create a new WebSocket server, io, that is attached to the existing HTTP server created in index.js
-  const io = new Server(server, {});
+  const io = new Server(server, {
+    cors: {
+      origin: "*",
+      methods: ["GET", "POST"],
+    },
+  });
 
   let numConnected = 0;
 
