@@ -14,7 +14,7 @@ const server = createServer(app);
 const port = process.env.PORT || 4000;
 
 server.listen(port, () => {
-  console.log(`Listening on port ${PORT}`);
+  console.log(`Listening on port ${port}`);
 });
 
 //socketManager handles all of our communications with the clients
