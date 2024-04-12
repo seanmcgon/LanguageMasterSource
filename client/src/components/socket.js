@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client';
 
-const socket = io('https://languagemastersource-server.onrender.com:3001', { transports: ["websocket"] });
+const socket = io('https://languagemastersource-server.onrender.com', { transports: ["websocket"] });
 
 export const connectSocket = () => {
   socket.on("connect", () => {
