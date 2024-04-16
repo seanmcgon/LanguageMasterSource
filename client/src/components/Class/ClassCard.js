@@ -11,7 +11,7 @@ const ClassCard = ({ title, link, onClassClick }) => {
           alt=""
         />
         <div className="class-txt">
-          <h4>{title}</h4>
+          <h4 id = "classPageTitle">{title}</h4>
         </div>
       </div>
     </Col>

@@ -2,7 +2,11 @@ const { MongoClient } = require('mongodb');
 const { TextEncoder } = require('util');
 const connectionString = "mongodb+srv://mkandeshwara:0CgF5I8hwXaf88dy@cluster0.tefxjrp.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0&ssl=true";
 const client = new MongoClient(connectionString);
-const { verifyTeacher, createTeacher, verifyStudent, createStudent } = require('../databaseUsers'); // Adjusted import path
+const { 
+  verifyTeacher, createTeacher, verifyStudent, createStudent, 
+  createClass, getStudentsInClass, getTeachersInClass, getClassesTeacher,
+  getClassesStudent
+} = require('../databaseUsers'); // Adjusted import path
 
 
 function verifyTeacherData(socket) {

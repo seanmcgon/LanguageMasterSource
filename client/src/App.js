@@ -1,27 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from "./components/NavBar/NavBar.js";
 import Login from "./components/Login/Login.js";
 import SignUp from "./components/SignUp/signUp.js";
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import Banner from "./components/banner";
 import ClassMenu from "./components/Class/ClassMenu.js";
-
+import CreateAssignment from "./components/CreateAssignment/CreateAssignment.js";
 import "./App.css";
 import { Modal } from 'bootstrap';
 import ClassAsgmts from './components/ClassAssignments/classAsgmts.js';
 import ViewAssignment from './components/ClassAssignments/viewAssignments.js';
 
 const App = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+  //development credentials
+    const [isLoggedIn, setIsLoggedIn] = useState(true);  // Set to true for development
     const [classList, setClassList] = useState([]);
-    const [userEmail, setUserEmail] = useState("");
-    const [userName, setUserName] = useState(""); 
+    const [userEmail, setUserEmail] = useState("jyhuang@umass.edu");  // Hardcoded email
+    const [userName, setUserName] = useState("Jason Huang");  // Hardcoded user name
+
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
+    // const [classList, setClassList] = useState([]);
+    // const [userEmail, setUserEmail] = useState("");
+    // const [userName, setUserName] = useState(""); 
     const [currentClass, setCurrentClass] = useState(""); 
     const [currentAssignments, setCurrentAssignments] = useState([]); 
     const [currentAssignment, setCurrentAssignment] = useState(""); 
     const [currentAssignmentName, setCurrentAssignmentName] = useState(""); 
+    const [showCreateAssignment, setShowCreateAssignment] = useState(false);
 
-
+    useEffect(() => {
+      getClassesForUser(userEmail);  // Fetch classes for the hardcoded user
+    }, []);  // Empty dependency array to run only on mount
+  
     const [showLogoutMessage, setShowLogoutMessage] = useState(false);
 
     function getClassesHelper(userEmail) {
@@ -125,39 +135,49 @@ const App = () => {
         setCurrentAssignmentName('');
     };
     
+    const handleShowCreateAssignment = () => {
+      setShowCreateAssignment(true);  // Show CreateAssignment component
+    };
+  
+   const handleHideCreateAssignment = () => {
+      setShowCreateAssignment(false); // Hide CreateAssignment component
+    };
     return (
-        <>
-            <NavBar isLoggedIn={isLoggedIn} userName={userEmail} onSignOut={handleSignOut} />
-            <div>
-                {isLoggedIn ? (
-                    currentAssignment ? (
-                        <ViewAssignment
-                        lessonName={currentAssignmentName}
-                        flashcards={currentAssignment}
-                        onBack={goBackToAssignmentList}
-                    />
-                    ) : currentClass ? (
-                        <ClassAsgmts
-                            className={currentClass}
-                            asgmts={currentAssignments}
-                            onAssignmentClick={handleAssignmentClick}
-                            onBack={goBackToClassView}
-                        />
-
-                    ) : (
-                        <ClassMenu classes={classList} onClassClick={handleClassClick} />
-                    )
-                ) : (
-                    <>
-                        <Login onLoginSuccess={handleLoginSuccess} />
-                        <SignUp onLoginSuccess={handleLoginSuccess} />
-                        <Banner handleClick={() => {
-                            const signUpModal = new Modal(document.getElementById('SignUpForm'));
-                            signUpModal.show();
-                        }} />
-                    </>
-                )}
-            </div>
+            <>
+              
+        <NavBar isLoggedIn={isLoggedIn} userName={userEmail} onSignOut={handleSignOut} />
+        <div>
+        {isLoggedIn ? (
+    showCreateAssignment ? (
+        <CreateAssignment onBack={handleHideCreateAssignment} />
+    ) : currentAssignment ? (
+        <ViewAssignment
+            lessonName={currentAssignmentName}
+            flashcards={currentAssignment}
+            onBack={goBackToAssignmentList}
+        />
+    ) : currentClass ? (
+        <ClassAsgmts
+            className={currentClass}
+            asgmts={currentAssignments}
+            onAssignmentClick={handleAssignmentClick}
+            onBack={goBackToClassView}
+            onCreateAssignmentClick={handleShowCreateAssignment}
+        />
+    ) : (
+        <ClassMenu classes={classList} onClassClick={handleClassClick} />
+    )
+) : (
+                <>
+                    <Login onLoginSuccess={handleLoginSuccess} />
+                    <SignUp onLoginSuccess={handleLoginSuccess} />
+                    <Banner handleClick={() => {
+                        const signUpModal = new Modal(document.getElementById('SignUpForm'));
+                        signUpModal.show();
+                    }} />
+                </>
+            )}
+        </div>
             {showLogoutMessage && (
                 <div className="logout-message">
                     Logging out...

@@ -35,3 +35,6 @@
   font-weight: bold; /* Make the font weight bold */
   font-family: 'Arial', sans-serif; /* Use a modern, sans-serif font for a clean look */
 }
+.enrolledClass {
+  color: maroon !important;
+}
