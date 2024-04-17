@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./NavBar.css";
 import CreateClassPopup from './createClassPopup';
-import JoinClassPopup from './joinClass'; // Updated import for JoinClassPopup
+import JoinClassPopup from './joinClass';
 import AboutComponent from '../About/about';
 
 import { Modal } from 'bootstrap';
@@ -9,8 +9,15 @@ import { Dropdown } from 'react-bootstrap';
 
 function NavBar({ isLoggedIn, userName, onSignOut }) {
     const [showCreateClassModal, setCreateClassModal] = useState(false);
-    const [showJoinClassModal, setJoinClassModal] = useState(false); // State for Join Class modal
+    const [showJoinClassModal, setJoinClassModal] = useState(false);
     const [showAbout, setShowAbout] = useState(false);
+
+    useEffect(() => {
+        // Automatically hide the About section when the user logs in
+        if (isLoggedIn) {
+            setShowAbout(false);
+        }
+    }, [isLoggedIn]);  // Dependency array includes isLoggedIn to trigger when it changes
 
     const showSignUp = () => {
         const signUpModal = new Modal(document.getElementById('SignUpForm'));
@@ -51,6 +58,7 @@ function NavBar({ isLoggedIn, userName, onSignOut }) {
                             </>
                         ) : (
                             <>  
+                            
                             <Dropdown>
                                 <Dropdown.Toggle variant="light" id="dropdown-basic">
                                     Profile ({userName})
@@ -75,7 +83,7 @@ function NavBar({ isLoggedIn, userName, onSignOut }) {
 
                 {/* Modals */}
                 <CreateClassPopup show={showCreateClassModal} onHide={() => setCreateClassModal(false)} />
-                <JoinClassPopup show={showJoinClassModal} onHide={() => setJoinClassModal(false)} /> {/* Render JoinClassPopup */}
+                <JoinClassPopup show={showJoinClassModal} onHide={() => setJoinClassModal(false)} />
             </nav>
             {showAbout && <AboutComponent />}
         </>

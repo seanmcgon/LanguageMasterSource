@@ -1,6 +1,6 @@
 /* Overall form container styling */
 .CreateAsgmts {
-    height: 100vh; /* Set height to full viewport height */
+    height: 85vh; /* Set height to full viewport height */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -68,7 +68,7 @@
     background-color: #800000; /* Maroon color */
     color: white;
     border-color: maroon;
-    transform: scale(1.05);
+  transform: scale(1.05);
 
 }
 
