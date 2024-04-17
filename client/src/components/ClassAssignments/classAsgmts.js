@@ -4,7 +4,6 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import "./classAsgmts.css";
-import ViewAssignment from "./viewAssignments.js";
 
 export default function ClassAsgmts({ className, asgmts, onAssignmentClick, onBack, onCreateAssignmentClick }) {
   return (

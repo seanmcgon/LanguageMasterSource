@@ -1,6 +1,6 @@
 const express = require('express');
 const { createServer } = require('http');
-const { initSocket } = require('./modules/socketManager');
+const { initSocket } = require('./socket/socketManager');
 
 const app = express();
 //create a new Express application

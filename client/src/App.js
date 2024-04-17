@@ -9,19 +9,19 @@ import CreateAssignment from "./components/CreateAssignment/CreateAssignment.js"
 import "./App.css";
 import { Modal } from 'bootstrap';
 import ClassAsgmts from './components/ClassAssignments/classAsgmts.js';
-import ViewAssignment from './components/ClassAssignments/viewAssignments.js';
+import ViewAssignment from './components/viewAssignments/viewAssignments.js';
 
 const App = () => {
-  //development credentials
-    const [isLoggedIn, setIsLoggedIn] = useState(true);  // Set to true for development
-    const [classList, setClassList] = useState([]);
-    const [userEmail, setUserEmail] = useState("jyhuang@umass.edu");  // Hardcoded email
-    const [userName, setUserName] = useState("Jason Huang");  // Hardcoded user name
+//   //development credentials
+//     const [isLoggedIn, setIsLoggedIn] = useState(true);  // Set to true for development
+//     const [classList, setClassList] = useState([]);
+//     const [userEmail, setUserEmail] = useState("jyhuang@umass.edu");  // Hardcoded email
+//     const [userName, setUserName] = useState("Jason Huang");  // Hardcoded user name
 
-    // const [isLoggedIn, setIsLoggedIn] = useState(false);
-    // const [classList, setClassList] = useState([]);
-    // const [userEmail, setUserEmail] = useState("");
-    // const [userName, setUserName] = useState(""); 
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [classList, setClassList] = useState([]);
+    const [userEmail, setUserEmail] = useState("");
+    const [userName, setUserName] = useState(""); 
     const [currentClass, setCurrentClass] = useState(""); 
     const [currentAssignments, setCurrentAssignments] = useState([]); 
     const [currentAssignment, setCurrentAssignment] = useState(""); 

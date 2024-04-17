@@ -1,5 +1,5 @@
 const { Server } = require("socket.io");
-const { verifyTeacherData, createTeacherAccount, verifyStudentData, createStudentAccount} = require("./auth");
+const { verifyTeacherData, createTeacherAccount, verifyStudentData, createStudentAccount} = require("./userIO");
 
 
 
