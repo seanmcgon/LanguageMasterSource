@@ -6,9 +6,7 @@ const { verifyTeacherData, createTeacherAccount, verifyStudentData, createStuden
 function initSocket(server) {
     //create a new WebSocket server, io, that is attached to the existing HTTP server created in index.js
     const io = new Server(server, {
-        cors: {
-            origin: ["http://localhost:3001"],  
-        },
+        cors: { origin: "*", methods: ["GET", "POST"], },
     });
     disconnectAllClients(io)
 
